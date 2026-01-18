@@ -3,6 +3,7 @@ import App from "../App";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import AllUpcomingEvents from "../pages/AllUpcomingEvents";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "/all-upcoming-events",
+        Component: AllUpcomingEvents,
       },
     ],
   },
