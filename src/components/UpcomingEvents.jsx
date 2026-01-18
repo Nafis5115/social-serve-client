@@ -3,7 +3,7 @@ import React from "react";
 const UpcomingEvents = () => {
   return (
     <div>
-      <section className="py-24 bg-soft">
+      <section className="py-24 bg-soft text-black">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-3xl font-extrabold mb-10 text-center">
             Upcoming Events
@@ -16,7 +16,7 @@ const UpcomingEvents = () => {
                 className="h-44 w-full object-cover"
               />
               <div className="p-6">
-                <span className="text-xs bg-primary text-white px-3 py-1 rounded-full">
+                <span className="text-xs bg-red text-white px-3 py-1 rounded-full">
                   Cleanup
                 </span>
                 <h4 className="font-bold text-lg mt-3">
@@ -27,7 +27,7 @@ const UpcomingEvents = () => {
                 </p>
                 <a
                   href="event-details.html"
-                  className="inline-block mt-4 text-primary font-semibold hover:underline"
+                  className="inline-block mt-4 text-red font-semibold hover:underline"
                 >
                   View Details →
                 </a>
@@ -51,7 +51,7 @@ const UpcomingEvents = () => {
                 </p>
                 <a
                   href="event-details.html"
-                  className="inline-block mt-4 text-primary font-semibold hover:underline"
+                  className="inline-block mt-4 text-red font-semibold hover:underline"
                 >
                   View Details →
                 </a>
@@ -75,7 +75,7 @@ const UpcomingEvents = () => {
                 </p>
                 <a
                   href="event-details.html"
-                  className="inline-block mt-4 text-primary font-semibold hover:underline"
+                  className="inline-block mt-4 text-red font-semibold hover:underline"
                 >
                   View Details →
                 </a>

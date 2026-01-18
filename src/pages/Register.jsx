@@ -5,15 +5,13 @@ const Register = () => {
     <div className="bg-soft min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-extrabold text-primary">
-            Create Account
-          </h1>
+          <h1 className="text-3xl font-extrabold text-red">Create Account</h1>
           <p className="text-sm text-gray-500 mt-1">
             Join and make social impact
           </p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4 text-black">
           <div>
             <label className="block text-sm font-semibold mb-1">
               Full Name
@@ -56,16 +54,16 @@ const Register = () => {
             />
           </div>
 
-          <button className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-rose transition">
+          <button className="w-full bg-red text-white py-3 rounded-lg font-semibold hover:bg-rose transition">
             Create Account
           </button>
         </form>
 
-        <p className="text-center text-sm mt-6">
-          Already have an account?
+        <p className="text-center text-black text-sm mt-6">
+          Already have an account?{" "}
           <a
             href="login.html"
-            className="text-primary font-semibold hover:underline"
+            className="text-red font-semibold hover:underline"
           >
             Login
           </a>

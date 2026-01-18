@@ -5,7 +5,7 @@ const Login = () => {
     <div className="bg-soft min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-extrabold text-primary">SocialServe</h1>
+          <h1 className="text-3xl font-extrabold text-red">SocialServe</h1>
           <p className="text-sm text-gray-500 mt-1">
             Welcome back to the community
           </p>
@@ -32,7 +32,7 @@ const Login = () => {
             />
           </div>
 
-          <button className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-rose transition">
+          <button className="w-full bg-red text-white py-3 rounded-lg font-semibold hover:bg-rose transition">
             Login
           </button>
         </form>
@@ -69,7 +69,7 @@ const Login = () => {
           Don’t have an account?
           <a
             href="register.html"
-            className="text-primary font-semibold hover:underline"
+            className="text-red font-semibold hover:underline"
           >
             Sign Up
           </a>

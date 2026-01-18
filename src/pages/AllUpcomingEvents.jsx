@@ -42,7 +42,7 @@ const AllUpcomingEvents = () => {
               />
               <div class="p-6">
                 <div class="flex justify-between items-center">
-                  <span class="text-xs bg-primary text-white px-3 py-1 rounded-full">
+                  <span class="text-xs bg-red text-white px-3 py-1 rounded-full">
                     Cleanup
                   </span>
                   <span class="text-xs text-green-600 font-semibold">
@@ -58,10 +58,7 @@ const AllUpcomingEvents = () => {
                   📍 Dhaka • 🗓 25 Feb 2026
                 </p>
 
-                <a
-                  href="#"
-                  class="inline-block mt-4 text-primary font-semibold "
-                >
+                <a href="#" class="inline-block mt-4 text-red font-semibold ">
                   View Details →
                 </a>
               </div>
@@ -90,10 +87,7 @@ const AllUpcomingEvents = () => {
                   📍 Gazipur • 🗓 10 Mar 2026
                 </p>
 
-                <a
-                  href="#"
-                  class="inline-block mt-4 text-primary font-semibold "
-                >
+                <a href="#" class="inline-block mt-4 text-red font-semibold ">
                   View Details →
                 </a>
               </div>
@@ -122,10 +116,7 @@ const AllUpcomingEvents = () => {
                   📍 Sylhet • 🗓 28 Mar 2026
                 </p>
 
-                <a
-                  href="#"
-                  class="inline-block mt-4 text-primary font-semibold"
-                >
+                <a href="#" class="inline-block mt-4 text-red font-semibold">
                   View Details →
                 </a>
               </div>
@@ -136,7 +127,7 @@ const AllUpcomingEvents = () => {
             <button class="px-4 py-2 border rounded hover:bg-soft cursor-pointer">
               Prev
             </button>
-            <button class="px-4 py-2 bg-primary text-white rounded cursor-pointer">
+            <button class="px-4 py-2 bg-red text-white rounded cursor-pointer">
               1
             </button>
             <button class="px-4 py-2 border rounded hover:bg-soft cursor-pointer">

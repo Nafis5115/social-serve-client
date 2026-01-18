@@ -3,7 +3,7 @@ import React from "react";
 const EventDetails = () => {
   return (
     <div className="bg-soft text-navy">
-      <section className="relative h-[380px]">
+      <section className="relative h-95">
         <img
           src="https://images.unsplash.com/photo-1597668094841-6ed2b257d9d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cm9hZCUyMGNsZWFuaW5nfGVufDB8fDB8fHww"
           className="w-full h-full object-cover"
@@ -15,7 +15,7 @@ const EventDetails = () => {
         <div className="absolute inset-0 flex items-end">
           <div className="max-w-7xl  mx-auto grid lg:grid-cols-2">
             <div className="px-6 pb-10 text-white">
-              <span className="inline-block bg-primary px-4 py-1 rounded-full text-sm">
+              <span className="inline-block bg-red px-4 py-1 rounded-full text-sm">
                 Upcoming Event
               </span>
               <h2 className="text-4xl font-extrabold mt-4">
@@ -99,7 +99,7 @@ const EventDetails = () => {
               </p>
             </div>
 
-            <button className="mt-6 w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-rose">
+            <button className="mt-6 w-full bg-red text-white py-3 rounded-lg font-semibold hover:bg-rose">
               Join Event
             </button>
 

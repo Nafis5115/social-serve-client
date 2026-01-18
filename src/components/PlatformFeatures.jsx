@@ -3,7 +3,7 @@ import React from "react";
 const PlatformFeatures = () => {
   return (
     <div>
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-3xl font-extrabold text-center mb-16">
             Platform Features

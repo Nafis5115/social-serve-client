@@ -3,7 +3,7 @@ import React from "react";
 const Hero = () => {
   return (
     <div>
-      <section className="bg-linear-to-r from-primary via-rose to-maroon text-white">
+      <section className="bg-linear-to-r from-red via-rose to-maroon text-white">
         <div className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-14 items-center">
           <div>
             <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">

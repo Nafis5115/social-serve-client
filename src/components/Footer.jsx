@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="bg-black text-white py-16">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 text-sm">
         <div>
-          <h4 className="font-bold text-primary text-lg">SocialServe</h4>
+          <h4 className="font-bold text-red text-lg">SocialServe</h4>
           <p className="mt-3 text-white/70">
             National-scale community development and volunteer coordination
             platform.

@@ -1,9 +1,14 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-@theme {
-  --color-primary: #E5484D;
+@theme socialserve {
+  --color-red: #E5484D;
   --color-rose: #B83A52;
   --color-maroon: #7A2E4A;
   --color-navy: #0F172A;
   --color-soft: #F8FAFC;
+}
+
+@plugin "daisyui" {
+  themes: socialserve --default;
 }

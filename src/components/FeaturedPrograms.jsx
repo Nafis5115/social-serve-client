@@ -3,7 +3,7 @@ import React from "react";
 const FeaturedPrograms = () => {
   return (
     <div>
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-3xl font-extrabold text-center mb-10">
             Featured Community Programs
@@ -16,7 +16,7 @@ const FeaturedPrograms = () => {
                 className="h-48 w-full object-cover"
               />
               <div className="p-6">
-                <span className="text-xs bg-primary text-white px-3 py-1 rounded-full">
+                <span className="text-xs bg-red text-white px-3 py-1 rounded-full">
                   National Program
                 </span>
                 <h4 className="font-bold text-lg mt-3">Clean City Campaign</h4>

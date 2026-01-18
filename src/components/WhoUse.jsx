@@ -3,7 +3,7 @@ import React from "react";
 const WhoUse = () => {
   return (
     <div>
-      <section className="bg-soft py-24">
+      <section className="bg-soft py-24 text-black">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-3xl font-extrabold text-center mb-16">
             Who Uses SocialServe?
