@@ -38,7 +38,7 @@ const Footer = () => {
       </div>
 
       <p className="text-center text-xs text-white/50 mt-12">
-        © 2026 SocialServe • Portfolio Project by Nafis Shaan
+        © 2026 SocialServe • Community Development Platform
       </p>
     </footer>
   );
