@@ -4,7 +4,6 @@ const JoinedEvents = () => {
   return (
     <div className=" bg-soft">
       <div className="max-w-7xl mx-auto">
-        {/* HEADER */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold">Joined Events</h1>
           <p className="text-gray-600 text-sm">
@@ -12,7 +11,6 @@ const JoinedEvents = () => {
           </p>
         </div>
 
-        {/* GRID */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <JoinedCard
             title="Road Cleaning – Mirpur 10"
