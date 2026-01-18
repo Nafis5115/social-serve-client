@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -7,12 +7,10 @@ const Navbar = () => {
   return (
     <header className="bg-navy text-white sticky top-0 z-50">
       <div className="max-w-7xl mx-auto md:px-0 p-6 py-4 flex justify-between items-center">
-        {/* Logo */}
         <div className="cursor-pointer">
           <h1 className="text-2xl font-extrabold text-red">SocialServe</h1>
         </div>
 
-        {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a className="hover:text-red cursor-pointer">Home</a>
           <a className="hover:text-red cursor-pointer">Events</a>
@@ -60,13 +58,11 @@ const Navbar = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu Icon */}
         <button className="md:hidden" onClick={() => setOpen(!open)}>
           {open ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`
           md:hidden overflow-hidden transition-all duration-300 ease-in-out

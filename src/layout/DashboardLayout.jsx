@@ -7,8 +7,6 @@ const DashboardLayout = () => {
 
   return (
     <div className="min-h-screen bg-soft text-black max-w-7xl mx-auto mt-4 relative">
-      {/* MOBILE TOP BAR */}
-
       <div
         className="md:hidden bg-navy text-white w-12 rounded items-center flex justify-center py-2 mx-5"
         onClick={() => setIsOpen(true)}
@@ -17,12 +15,10 @@ const DashboardLayout = () => {
       </div>
 
       <div className="flex">
-        {/* DESKTOP SIDEBAR */}
-        <aside className="w-64 bg-navy text-white hidden md:flex flex-col">
+        <aside className="w-64 h-screen bg-navy text-white hidden md:flex flex-col mb-4">
           <SidebarLinks />
         </aside>
 
-        {/* MOBILE SIDEBAR */}
         <aside
           className={`fixed top-14 left-0 h-full w-64 bg-navy text-white z-50 transform transition-transform duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-full"} md:hidden`}
@@ -34,7 +30,6 @@ const DashboardLayout = () => {
           <SidebarLinks closeMenu={() => setIsOpen(false)} />
         </aside>
 
-        {/* OVERLAY */}
         {isOpen && (
           <div
             className="fixed inset-0 bg-black/40 z-40 md:hidden"
@@ -42,8 +37,7 @@ const DashboardLayout = () => {
           />
         )}
 
-        {/* MAIN CONTENT */}
-        <main className="flex-1 p-4 md:px-10">
+        <main className="flex-1 px-4 md:px-10 md:py-0 py-4">
           <Outlet />
         </main>
       </div>

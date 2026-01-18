@@ -8,6 +8,7 @@ import EventDetails from "../pages/EventDetails";
 import DashboardLayout from "../layout/DashboardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
 import EditProfile from "../pages/dashboard/EditProfile";
+import JoinedEvents from "../pages/dashboard/JoinedEvents";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/edit-profile",
             Component: EditProfile,
+          },
+          {
+            path: "/dashboard/joined-events",
+            Component: JoinedEvents,
           },
         ],
       },
