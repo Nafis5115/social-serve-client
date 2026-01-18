@@ -1,6 +1,6 @@
 import { Menu } from "lucide-react";
-import React, { useState } from "react";
-import { Outlet } from "react-router";
+import { useState } from "react";
+import { Link, NavLink, Outlet } from "react-router";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,49 +45,53 @@ const DashboardLayout = () => {
   );
 };
 
-export default DashboardLayout;
-
 const SidebarLinks = ({ closeMenu }) => {
+  const sidebarLinks = [
+    {
+      name: "Dashboard",
+      link: "/dashboard",
+    },
+    {
+      name: "My Events",
+      link: "/dashboard/my-events",
+    },
+    {
+      name: "Joined Events",
+      link: "/dashboard/joined-events",
+    },
+    {
+      name: "Create Event",
+      link: "/dashboard/create-event",
+    },
+    {
+      name: "Edit Profile",
+      link: "/dashboard/edit-profile",
+    },
+  ];
+
   const handleClick = () => {
     closeMenu && closeMenu();
   };
 
   return (
     <nav className="flex-1 p-6 space-y-2 text-sm">
-      <a
-        onClick={handleClick}
-        className="block px-4 py-2 rounded bg-red text-white font-semibold cursor-pointer"
-      >
-        Dashboard
-      </a>
-
-      <a
-        onClick={handleClick}
-        className="block px-4 py-2 rounded hover:bg-red hover:text-white cursor-pointer"
-      >
-        My Events
-      </a>
-
-      <a
-        onClick={handleClick}
-        className="block px-4 py-2 rounded hover:bg-red hover:text-white cursor-pointer"
-      >
-        Joined Events
-      </a>
-
-      <a
-        onClick={handleClick}
-        className="block px-4 py-2 rounded hover:bg-red hover:text-white cursor-pointer"
-      >
-        Create Event
-      </a>
-
-      <a
-        onClick={handleClick}
-        className="block px-4 py-2 rounded hover:bg-red hover:text-white cursor-pointer"
-      >
-        Edit Profile
-      </a>
+      {sidebarLinks.map((sidebarLink) => (
+        <NavLink
+          onClick={() => {
+            handleClick();
+          }}
+          key={sidebarLink.link}
+          to={sidebarLink.link}
+          end={sidebarLink.link === "/dashboard"}
+          className={({ isActive }) =>
+            `block px-4 py-2 rounded  text-white font-semibold cursor-pointer ${isActive && "bg-red"}`
+          }
+        >
+          {sidebarLink.name}
+        </NavLink>
+      ))}
     </nav>
   );
 };
+
+export default DashboardLayout;

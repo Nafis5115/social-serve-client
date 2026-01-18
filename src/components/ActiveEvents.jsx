@@ -40,6 +40,11 @@ const ActiveEvents = () => {
             </div>
           </div>
         </div>
+        <div className="text-center mt-14 cursor-pointer">
+          <a className="inline-block bg-white text-black px-8 py-3 rounded font-semibold hover:bg-red hover:text-white">
+            View All Upcoming Events
+          </a>
+        </div>
       </section>
     </div>
   );

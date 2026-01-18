@@ -22,6 +22,14 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
+      },
+      {
         path: "/dashboard",
         Component: DashboardLayout,
         children: [
@@ -56,14 +64,6 @@ const router = createBrowserRouter([
         Component: EventDetails,
       },
     ],
-  },
-  {
-    path: "/login",
-    Component: Login,
-  },
-  {
-    path: "/register",
-    Component: Register,
   },
 ]);
 

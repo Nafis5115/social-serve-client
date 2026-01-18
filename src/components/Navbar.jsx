@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -8,7 +9,9 @@ const Navbar = () => {
     <header className="bg-navy text-white sticky top-0 z-50">
       <div className="max-w-7xl mx-auto md:px-0 p-6 py-4 flex justify-between items-center">
         <div className="cursor-pointer">
-          <h1 className="text-2xl font-extrabold text-red">SocialServe</h1>
+          <Link to={"/"} className="text-2xl font-extrabold text-red">
+            SocialServe
+          </Link>
         </div>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -17,12 +20,9 @@ const Navbar = () => {
           <a className="hover:text-red cursor-pointer">Impact</a>
           <a className="hover:text-red cursor-pointer">FAQ</a>
 
-          <a
-            href="login.html"
-            className="bg-red px-4 py-2 rounded hover:bg-rose"
-          >
+          <Link to="/login" className="bg-red px-4 py-2 rounded hover:bg-rose">
             Login
-          </a>
+          </Link>
 
           <div className="relative group cursor-pointer">
             <div className="flex items-center gap-2">
@@ -42,18 +42,18 @@ const Navbar = () => {
                 pointer-events-none group-hover:pointer-events-auto
               "
             >
-              <a
-                href="/profile/edit"
+              <Link
+                to="/dashboard/edit-profile"
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 Edit Profile
-              </a>
-              <a
-                href="/dashboard"
+              </Link>
+              <Link
+                to="/dashboard"
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 Dashboard
-              </a>
+              </Link>
             </div>
           </div>
         </nav>
@@ -74,15 +74,22 @@ const Navbar = () => {
           <a className="hover:text-red cursor-pointer">Events</a>
           <a className="hover:text-red cursor-pointer">Impact</a>
           <a className="hover:text-red cursor-pointer">FAQ</a>
-          <a
-            href="login.html"
-            className="bg-red px-6 py-2 rounded hover:bg-rose"
-          >
+          <Link to="/login" className="bg-red px-6 py-2 rounded hover:bg-rose">
             Login
-          </a>
+          </Link>
 
-          <a className="block hover:text-red cursor-pointer">Edit Profile</a>
-          <a className="block hover:text-red cursor-pointer">Dashboard</a>
+          <Link
+            to={"/dashboard/edit-profile"}
+            className="block hover:text-red cursor-pointer"
+          >
+            Edit Profile
+          </Link>
+          <Link
+            to={"/dashboard"}
+            className="block hover:text-red cursor-pointer"
+          >
+            Dashboard
+          </Link>
         </nav>
       </div>
     </header>
