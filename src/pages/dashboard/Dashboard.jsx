@@ -10,11 +10,10 @@ const Dashboard = () => {
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <StatCard title="Events Joined" value="12" />
         <StatCard title="Events Created" value="4" />
         <StatCard title="Active Events" value="2" />
-        <StatCard title="Total Impact" value="320+" />
       </div>
 
       <div className="bg-white rounded-xl shadow p-6 mb-10">

@@ -91,22 +91,32 @@ const Navbar = () => {
         `}
       >
         <nav className="flex flex-col items-center text-center gap-4 py-6 text-sm font-medium">
-          <a className="hover:text-red cursor-pointer">Home</a>
-          <a className="hover:text-red cursor-pointer">Events</a>
-          <a className="hover:text-red cursor-pointer">Impact</a>
-          <a className="hover:text-red cursor-pointer">FAQ</a>
+          {navLinks.map((link) => (
+            <NavLink
+              onClick={() => setOpen(false)}
+              key={link.link}
+              to={link.link}
+              className={({ isActive }) =>
+                `hover:text-red cursor-pointer ${isActive && "text-red"}`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
           <Link to="/login" className="bg-red px-6 py-2 rounded hover:bg-rose">
             Login
           </Link>
 
           <Link
             to={"/dashboard/edit-profile"}
+            onClick={() => setOpen(false)}
             className="block hover:text-red cursor-pointer"
           >
             Edit Profile
           </Link>
           <Link
             to={"/dashboard"}
+            onClick={() => setOpen(false)}
             className="block hover:text-red cursor-pointer"
           >
             Dashboard
