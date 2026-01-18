@@ -6,7 +6,7 @@ const Navbar = () => {
 
   return (
     <header className="bg-navy text-white sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto  py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto md:px-0 p-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="cursor-pointer">
           <h1 className="text-2xl font-extrabold text-red">SocialServe</h1>
