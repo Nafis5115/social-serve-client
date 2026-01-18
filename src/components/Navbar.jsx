@@ -1,8 +1,22 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
+  const navLinks = [
+    {
+      name: "Home",
+      link: "/",
+    },
+    {
+      name: "Upcoming Events",
+      link: "/all-upcoming-events",
+    },
+    {
+      name: "Active Events",
+      link: "/all-active-events",
+    },
+  ];
   const [open, setOpen] = useState(false);
 
   return (
@@ -15,10 +29,17 @@ const Navbar = () => {
         </div>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <a className="hover:text-red cursor-pointer">Home</a>
-          <a className="hover:text-red cursor-pointer">Events</a>
-          <a className="hover:text-red cursor-pointer">Impact</a>
-          <a className="hover:text-red cursor-pointer">FAQ</a>
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.link}
+              to={link.link}
+              className={({ isActive }) =>
+                `hover:text-red cursor-pointer ${isActive && "text-red"}`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
 
           <Link to="/login" className="bg-red px-4 py-2 rounded hover:bg-rose">
             Login

@@ -1,11 +1,11 @@
 import React from "react";
 
-const AllUpcomingEvents = () => {
+const AllActiveEvents = () => {
   return (
     <div class="bg-soft text-navy">
       <section class="bg-white py-14 shadow-sm">
         <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-10">
-          Upcoming Events
+          Active Events
         </h2>
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-4">
           <input
@@ -146,4 +146,4 @@ const AllUpcomingEvents = () => {
   );
 };
 
-export default AllUpcomingEvents;
+export default AllActiveEvents;

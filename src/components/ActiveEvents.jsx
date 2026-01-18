@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const ActiveEvents = () => {
   return (
@@ -41,9 +42,12 @@ const ActiveEvents = () => {
           </div>
         </div>
         <div className="text-center mt-14 cursor-pointer">
-          <a className="inline-block bg-white text-black px-8 py-3 rounded font-semibold hover:bg-red hover:text-white">
-            View All Upcoming Events
-          </a>
+          <Link
+            to={"/all-active-events"}
+            className="inline-block bg-white text-black px-8 py-3 rounded font-semibold hover:bg-red hover:text-white"
+          >
+            View All Active Events
+          </Link>
         </div>
       </section>
     </div>
