@@ -10,6 +10,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import EditProfile from "../pages/dashboard/EditProfile";
 import JoinedEvents from "../pages/dashboard/JoinedEvents";
 import MyEvents from "../pages/dashboard/MyEvents";
+import CreateEvent from "../pages/dashboard/CreateEvent";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/my-events",
             Component: MyEvents,
+          },
+          {
+            path: "/dashboard/create-event",
+            Component: CreateEvent,
           },
         ],
       },
