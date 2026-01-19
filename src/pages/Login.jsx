@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 const Login = () => {
-  const { loginUser, googleLogin } = useAuth();
+  const { loginUser, googleLogin, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirect = location.state?.pathname || "/";
   const handleLogin = (e) => {
     e.preventDefault();
     loginUser(email, password)
@@ -18,6 +22,13 @@ const Login = () => {
       .then((data) => console.log(data))
       .catch((e) => console.log(e));
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(redirect);
+    }
+  }, [user, navigate, redirect]);
+
   return (
     <div className="bg-soft flex items-center justify-center px-4 text-black py-10">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">

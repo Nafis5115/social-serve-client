@@ -12,6 +12,7 @@ import JoinedEvents from "../pages/dashboard/JoinedEvents";
 import MyEvents from "../pages/dashboard/MyEvents";
 import CreateEvent from "../pages/dashboard/CreateEvent";
 import AllActiveEvents from "../pages/AllActiveEvents";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -36,23 +37,43 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            Component: Dashboard,
+            element: (
+              <PrivateRoute>
+                <Dashboard></Dashboard>
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/edit-profile",
-            Component: EditProfile,
+            element: (
+              <PrivateRoute>
+                <EditProfile></EditProfile>
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/joined-events",
-            Component: JoinedEvents,
+            element: (
+              <PrivateRoute>
+                <JoinedEvents></JoinedEvents>
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/my-events",
-            Component: MyEvents,
+            element: (
+              <PrivateRoute>
+                <MyEvents></MyEvents>
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/create-event",
-            Component: CreateEvent,
+            element: (
+              <PrivateRoute>
+                <CreateEvent></CreateEvent>
+              </PrivateRoute>
+            ),
           },
         ],
       },
