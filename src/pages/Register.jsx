@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Register = () => {
+  const { createUser, updateUser } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      await createUser(email, password).then((result) => console.log(result));
+      await updateUser(name, photoURL);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="bg-soft flex items-center justify-center px-4 py-10 text-black">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
@@ -12,12 +29,13 @@ const Register = () => {
           </p>
         </div>
 
-        <form className="space-y-4 text-black">
+        <form onSubmit={handleRegister} className="space-y-4 text-black">
           <div>
             <label className="block text-sm font-semibold mb-1">
               Full Name
             </label>
             <input
+              onChange={(e) => setName(e.target.value)}
               type="text"
               placeholder="Your full name"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
@@ -30,6 +48,7 @@ const Register = () => {
             </label>
             <input
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
@@ -40,6 +59,7 @@ const Register = () => {
               Photo URL
             </label>
             <input
+              onChange={(e) => setPhotoURL(e.target.value)}
               type="text"
               placeholder="https://image-link.com"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
@@ -50,6 +70,7 @@ const Register = () => {
             <label className="block text-sm font-semibold mb-1">Password</label>
             <input
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Minimum 6 characters"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />

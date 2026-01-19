@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const navLinks = [
@@ -18,6 +19,7 @@ const Navbar = () => {
     },
   ];
   const [open, setOpen] = useState(false);
+  const { logoutUser, user, loading } = useAuth();
 
   return (
     <header className="bg-navy text-white sticky top-0 z-50">
@@ -40,43 +42,57 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
+          {!loading ? (
+            user ? (
+              <div className="relative group cursor-pointer">
+                <div className="flex items-center gap-2">
+                  <img
+                    src="https://i.pravatar.cc/60"
+                    alt="profile"
+                    className="w-8 h-8 rounded-full"
+                  />
+                </div>
 
-          <Link to="/login" className="bg-red px-4 py-2 rounded hover:bg-rose">
-            Login
-          </Link>
-
-          <div className="relative group cursor-pointer">
-            <div className="flex items-center gap-2">
-              <img
-                src="https://i.pravatar.cc/60"
-                alt="profile"
-                className="w-8 h-8 rounded-full"
-              />
-            </div>
-
-            <div
-              className="
+                <div
+                  className="
                 absolute right-0 mt-0 w-54 bg-white text-gray-800 shadow-lg
                 opacity-0 scale-95 translate-y-2
                 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0
                 transition-all duration-200 origin-top
                 pointer-events-none group-hover:pointer-events-auto
               "
-            >
+                >
+                  <Link
+                    to="/dashboard/edit-profile"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Edit Profile
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Dashboard
+                  </Link>
+                  <span
+                    onClick={logoutUser}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Sign out
+                  </span>
+                </div>
+              </div>
+            ) : (
               <Link
-                to="/dashboard/edit-profile"
-                className="block px-4 py-2 hover:bg-gray-100"
+                to="/login"
+                className="bg-red px-4 py-2 rounded hover:bg-rose"
               >
-                Edit Profile
+                Login
               </Link>
-              <Link
-                to="/dashboard"
-                className="block px-4 py-2 hover:bg-gray-100"
-              >
-                Dashboard
-              </Link>
-            </div>
-          </div>
+            )
+          ) : (
+            <span className="loading loading-spinner loading-sm"></span>
+          )}
         </nav>
 
         <button className="md:hidden" onClick={() => setOpen(!open)}>
@@ -103,24 +119,46 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          <Link to="/login" className="bg-red px-6 py-2 rounded hover:bg-rose">
-            Login
-          </Link>
 
-          <Link
-            to={"/dashboard/edit-profile"}
-            onClick={() => setOpen(false)}
-            className="block hover:text-red cursor-pointer"
-          >
-            Edit Profile
-          </Link>
-          <Link
-            to={"/dashboard"}
-            onClick={() => setOpen(false)}
-            className="block hover:text-red cursor-pointer"
-          >
-            Dashboard
-          </Link>
+          {!loading ? (
+            user ? (
+              <div className="flex flex-col items-center text-center gap-4 text-sm font-medium">
+                <Link
+                  to={"/dashboard/edit-profile"}
+                  onClick={() => setOpen(false)}
+                  className="block hover:text-red cursor-pointer"
+                >
+                  Edit Profile
+                </Link>
+                <Link
+                  to={"/dashboard"}
+                  onClick={() => setOpen(false)}
+                  className="block hover:text-red cursor-pointer"
+                >
+                  Dashboard
+                </Link>
+                <span
+                  onClick={() => {
+                    logoutUser();
+                    setOpen(false);
+                  }}
+                  className="block hover:text-red cursor-pointer"
+                >
+                  Sign out
+                </span>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                className="bg-red px-6 py-2 rounded hover:bg-rose"
+              >
+                Login
+              </Link>
+            )
+          ) : (
+            <span className="loading loading-spinner loading-sm"></span>
+          )}
         </nav>
       </div>
     </header>

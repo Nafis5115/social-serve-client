@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+  const { loginUser } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = (e) => {
+    e.preventDefault();
+    loginUser(email, password)
+      .then((result) => console.log(result))
+      .catch((e) => console.log(e));
+  };
   return (
     <div className="bg-soft flex items-center justify-center px-4 text-black py-10">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
@@ -12,13 +22,14 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="space-y-5">
+        <form onSubmit={handleLogin} className="space-y-5">
           <div>
             <label className="block text-sm font-semibold mb-1">
               Email Address
             </label>
             <input
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
@@ -28,6 +39,7 @@ const Login = () => {
             <label className="block text-sm font-semibold mb-1">Password</label>
             <input
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
