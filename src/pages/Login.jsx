@@ -3,13 +3,19 @@ import { Link } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { loginUser } = useAuth();
+  const { loginUser, googleLogin } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = (e) => {
     e.preventDefault();
     loginUser(email, password)
       .then((result) => console.log(result))
+      .catch((e) => console.log(e));
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((data) => console.log(data))
       .catch((e) => console.log(e));
   };
   return (
@@ -56,7 +62,10 @@ const Login = () => {
           <div className="flex-1 h-px bg-gray-200"></div>
         </div>
 
-        <button className="w-full border border-gray-300 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-soft transition">
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full border border-gray-300 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-soft transition"
+        >
           <svg className="w-5 h-5" viewBox="0 0 48 48">
             <path
               fill="#EA4335"

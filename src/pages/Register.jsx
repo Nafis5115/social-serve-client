@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 const Register = () => {
-  const { createUser, updateUser } = useAuth();
+  const { createUser, updateUser, googleLogin } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +17,11 @@ const Register = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+  const handleGoogleRegister = () => {
+    googleLogin()
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -86,7 +91,10 @@ const Register = () => {
           <div className="flex-1 h-px bg-gray-200"></div>
         </div>
 
-        <button className="w-full border border-gray-300 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-soft transition">
+        <button
+          onClick={handleGoogleRegister}
+          className="w-full border border-gray-300 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-soft transition"
+        >
           <svg className="w-5 h-5" viewBox="0 0 48 48">
             <path
               fill="#EA4335"
