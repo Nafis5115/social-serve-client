@@ -47,9 +47,9 @@ const Navbar = () => {
               <div className="relative group cursor-pointer">
                 <div className="flex items-center gap-2">
                   <img
-                    src="https://i.pravatar.cc/60"
+                    src={user.photoURL}
                     alt="profile"
-                    className="w-8 h-8 rounded-full"
+                    className="w-8 h-8 rounded-full object-cover"
                   />
                 </div>
 
