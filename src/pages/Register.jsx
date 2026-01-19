@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 const Register = () => {
-  const { createUser, updateUser, googleLogin } = useAuth();
-
+  const { createUser, updateUser, googleLogin, user, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+
+  const location = useLocation();
+  const redirect = location.state?.pathname || "/";
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -24,6 +26,15 @@ const Register = () => {
       .catch((e) => console.log(e));
   };
 
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-center h-screen">
+        <span className="loading loading-spinner text-black loading-sm"></span>
+      </div>
+    );
+  if (user) {
+    return <Navigate to={redirect} replace />;
+  }
   return (
     <div className="bg-soft flex items-center justify-center px-4 py-10 text-black">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router";
+import React, { useState } from "react";
+import { Link, Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router";
 
 const Login = () => {
-  const { loginUser, googleLogin, user } = useAuth();
+  const { loginUser, googleLogin, user, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+
   const location = useLocation();
   const redirect = location.state?.pathname || "/";
   const handleLogin = (e) => {
@@ -23,12 +22,15 @@ const Login = () => {
       .catch((e) => console.log(e));
   };
 
-  useEffect(() => {
-    if (user) {
-      navigate(redirect);
-    }
-  }, [user, navigate, redirect]);
-
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-center h-screen">
+        <span className="loading loading-spinner text-black loading-sm"></span>
+      </div>
+    );
+  if (user) {
+    return <Navigate to={redirect} replace />;
+  }
   return (
     <div className="bg-soft flex items-center justify-center px-4 text-black py-10">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
