@@ -178,7 +178,8 @@ const CreateEvent = () => {
               <div>
                 <h3 className="font-semibold">AI Assistance</h3>
                 <p className="text-sm text-gray-600">
-                  Auto-generate description & guidelines using AI
+                  Auto-Generate "Volunteer Responsibilities" And "Safety &
+                  Guidelines" Using AI
                 </p>
               </div>
 
