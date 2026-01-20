@@ -64,37 +64,38 @@ const AllActiveEvents = () => {
               <EventCard key={event._id} event={event}></EventCard>
             ))}
           </div>
-
-          <div class="flex justify-center mt-16 gap-2">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-              className="px-4 py-2 border rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
-            {[...Array(totalPages).keys()].map((num) => (
+          {events.length > 5 && (
+            <div class="flex justify-center mt-16 gap-2">
               <button
-                key={num}
-                onClick={() => setPage(num + 1)}
-                className={`px-4 py-2 rounded ${
-                  page === num + 1
-                    ? "bg-red text-white"
-                    : "border hover:bg-soft"
-                }`}
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+                className="px-4 py-2 border rounded disabled:opacity-50"
               >
-                {num + 1}
+                Prev
               </button>
-            ))}
+              {[...Array(totalPages).keys()].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num + 1)}
+                  className={`px-4 py-2 rounded ${
+                    page === num + 1
+                      ? "bg-red text-white"
+                      : "border hover:bg-soft"
+                  }`}
+                >
+                  {num + 1}
+                </button>
+              ))}
 
-            <button
-              disabled={page === totalPages}
-              onClick={() => setPage(page + 1)}
-              className="px-4 py-2 border rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
+              <button
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+                className="px-4 py-2 border rounded disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </div>
