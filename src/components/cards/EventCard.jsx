@@ -1,5 +1,6 @@
 import React from "react";
 import { formattedDate } from "../../helpers/formattedData";
+import { Link } from "react-router";
 
 const EventCard = ({ event }) => {
   return (
@@ -13,12 +14,12 @@ const EventCard = ({ event }) => {
         <p className="text-sm text-gray-600 mt-1">
           📍 {event.location} • 🗓 {formattedDate(event.startDate)}
         </p>
-        <a
-          href="event-details.html"
+        <Link
+          to={`/event-details/${event._id}`}
           className="inline-block mt-4 text-red font-semibold cursor-pointer"
         >
           View Details →
-        </a>
+        </Link>
       </div>
     </div>
   );

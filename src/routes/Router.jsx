@@ -13,6 +13,7 @@ import MyEvents from "../pages/dashboard/MyEvents";
 import CreateEvent from "../pages/dashboard/CreateEvent";
 import AllActiveEvents from "../pages/AllActiveEvents";
 import PrivateRoute from "./PrivateRoute";
+import axiosPublic from "../api/axiosPublic";
 
 const router = createBrowserRouter([
   {
@@ -86,8 +87,12 @@ const router = createBrowserRouter([
         Component: AllActiveEvents,
       },
       {
-        path: "/event-details",
+        path: "/event-details/:id",
         Component: EventDetails,
+        loader: async ({ params }) => {
+          const res = await axiosPublic.get(`/event-details/${params.id}`);
+          return res.data;
+        },
       },
     ],
   },
