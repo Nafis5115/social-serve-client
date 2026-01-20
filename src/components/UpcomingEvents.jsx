@@ -11,8 +11,8 @@ const UpcomingEvents = () => {
     (async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/upcoming-events");
-        setEvents(res.data);
+        const res = await axios.get("/upcoming-events?page=1&limit=6");
+        setEvents(res.data.events);
         setLoading(false);
       } catch (error) {
         console.log(error);

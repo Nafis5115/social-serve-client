@@ -6,18 +6,28 @@ const AllUpcomingEvents = () => {
   const [events, setEvents] = useState([]);
   const axios = useAxios();
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/upcoming-events");
-        setEvents(res.data);
-        setLoading(false);
+
+        const res = await axios.get(
+          `/upcoming-events?page=${page}&limit=${limit}`,
+        );
+
+        setEvents(res.data.events);
+        setTotalPages(res.data.totalPages);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     })();
-  }, [axios]);
+  }, [axios, page, limit]);
+
   if (loading)
     return (
       <div className=" flex justify-center w-full items-start mt-20 h-screen">
@@ -25,19 +35,19 @@ const AllUpcomingEvents = () => {
       </div>
     );
   return (
-    <div class="bg-soft text-navy">
-      <section class="bg-white py-14 shadow-sm">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-10">
+    <div className="bg-soft text-navy">
+      <section className="bg-white py-14 shadow-sm">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-10">
           Upcoming Events
         </h2>
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-4">
+        <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-4">
           <input
             type="text"
             placeholder="Search by event name..."
-            class="border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
+            className="border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
           />
 
-          <select class="border rounded-lg px-4 py-3 text-sm">
+          <select className="border rounded-lg px-4 py-3 text-sm">
             <option>All Categories</option>
             <option value="Cleanup">Cleanup</option>
             <option value="Environment">Environment</option>
@@ -46,14 +56,6 @@ const AllUpcomingEvents = () => {
             <option value="Social">Social</option>
             <option value="Health">Health</option>
             <option value="Education">Education</option>
-          </select>
-
-          <select class="border rounded-lg px-4 py-3 text-sm">
-            <option>All Locations</option>
-            <option>Dhaka</option>
-            <option>Chattogram</option>
-            <option>Sylhet</option>
-            <option>Rajshahi</option>
           </select>
         </div>
       </section>
@@ -65,24 +67,38 @@ const AllUpcomingEvents = () => {
               <EventCard key={event._id} event={event}></EventCard>
             ))}
           </div>
+          {events.length > 5 && (
+            <div class="flex justify-center mt-16 gap-2">
+              <button
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+                className="px-4 py-2 border rounded disabled:opacity-50"
+              >
+                Prev
+              </button>
+              {[...Array(totalPages).keys()].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num + 1)}
+                  className={`px-4 py-2 rounded ${
+                    page === num + 1
+                      ? "bg-red text-white"
+                      : "border hover:bg-soft"
+                  }`}
+                >
+                  {num + 1}
+                </button>
+              ))}
 
-          <div class="flex justify-center mt-16 gap-2">
-            <button class="px-4 py-2 border rounded hover:bg-soft cursor-pointer">
-              Prev
-            </button>
-            <button class="px-4 py-2 bg-red text-white rounded cursor-pointer">
-              1
-            </button>
-            <button class="px-4 py-2 border rounded hover:bg-soft cursor-pointer">
-              2
-            </button>
-            <button class="px-4 py-2 border rounded hover:bg-soft cursor-pointer">
-              3
-            </button>
-            <button class="px-4 py-2 border rounded hover:bg-soft cursor-pointer">
-              Next
-            </button>
-          </div>
+              <button
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+                className="px-4 py-2 border rounded disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </div>
