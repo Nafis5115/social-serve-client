@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useAxios from "../hooks/useAxios";
+import EventCard from "../components/cards/EventCard";
 
 const AllActiveEvents = () => {
+  const [events, setEvents] = useState([]);
+  const axios = useAxios();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get("/active-events");
+        setEvents(res.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [axios]);
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-start mt-20 h-screen">
+        <span className="loading loading-spinner text-black loading-xl"></span>
+      </div>
+    );
   return (
     <div class="bg-soft text-navy">
       <section class="bg-white py-14 shadow-sm">
@@ -16,10 +39,13 @@ const AllActiveEvents = () => {
 
           <select class="border rounded-lg px-4 py-3 text-sm">
             <option>All Categories</option>
-            <option>Cleanup</option>
-            <option>Plantation</option>
-            <option>Donation</option>
-            <option>Relief</option>
+            <option value="Cleanup">Cleanup</option>
+            <option value="Environment">Environment</option>
+            <option value="Donation">Donation</option>
+            <option value="Relief">Relief</option>
+            <option value="Social">Social</option>
+            <option value="Health">Health</option>
+            <option value="Education">Education</option>
           </select>
 
           <select class="border rounded-lg px-4 py-3 text-sm">
@@ -35,92 +61,9 @@ const AllActiveEvents = () => {
       <section class="py-20">
         <div class="max-w-7xl mx-auto px-6">
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1581579186985-9d1a3d97b8a3"
-                class="h-48 w-full object-cover"
-              />
-              <div class="p-6">
-                <div class="flex justify-between items-center">
-                  <span class="text-xs bg-red text-white px-3 py-1 rounded-full">
-                    Cleanup
-                  </span>
-                  <span class="text-xs text-green-600 font-semibold">
-                    Upcoming
-                  </span>
-                </div>
-
-                <h4 class="font-bold text-lg mt-3">
-                  Road Cleaning – Mirpur 10
-                </h4>
-
-                <p class="text-sm text-gray-600 mt-1">
-                  📍 Dhaka • 🗓 25 Feb 2026
-                </p>
-
-                <a href="#" class="inline-block mt-4 text-red font-semibold ">
-                  View Details →
-                </a>
-              </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1469474968028-56623f02e42e"
-                class="h-48 w-full object-cover"
-              />
-              <div class="p-6">
-                <div class="flex justify-between items-center">
-                  <span class="text-xs bg-rose text-white px-3 py-1 rounded-full">
-                    Plantation
-                  </span>
-                  <span class="text-xs text-green-600 font-semibold">
-                    Upcoming
-                  </span>
-                </div>
-
-                <h4 class="font-bold text-lg mt-3">
-                  Tree Plantation – Gazipur
-                </h4>
-
-                <p class="text-sm text-gray-600 mt-1">
-                  📍 Gazipur • 🗓 10 Mar 2026
-                </p>
-
-                <a href="#" class="inline-block mt-4 text-red font-semibold ">
-                  View Details →
-                </a>
-              </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1526256262350-7da7584cf5eb"
-                class="h-48 w-full object-cover"
-              />
-              <div class="p-6">
-                <div class="flex justify-between items-center">
-                  <span class="text-xs bg-maroon text-white px-3 py-1 rounded-full">
-                    Donation
-                  </span>
-                  <span class="text-xs text-green-600 font-semibold">
-                    Upcoming
-                  </span>
-                </div>
-
-                <h4 class="font-bold text-lg mt-3">
-                  Ramadan Food Distribution
-                </h4>
-
-                <p class="text-sm text-gray-600 mt-1">
-                  📍 Sylhet • 🗓 28 Mar 2026
-                </p>
-
-                <a href="#" class="inline-block mt-4 text-red font-semibold">
-                  View Details →
-                </a>
-              </div>
-            </div>
+            {events.map((event) => (
+              <EventCard key={event._id} event={event}></EventCard>
+            ))}
           </div>
 
           <div class="flex justify-center mt-16 gap-2">

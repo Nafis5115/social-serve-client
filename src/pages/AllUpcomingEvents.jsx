@@ -39,10 +39,13 @@ const AllUpcomingEvents = () => {
 
           <select class="border rounded-lg px-4 py-3 text-sm">
             <option>All Categories</option>
-            <option>Cleanup</option>
-            <option>Plantation</option>
-            <option>Donation</option>
-            <option>Relief</option>
+            <option value="Cleanup">Cleanup</option>
+            <option value="Environment">Environment</option>
+            <option value="Donation">Donation</option>
+            <option value="Relief">Relief</option>
+            <option value="Social">Social</option>
+            <option value="Health">Health</option>
+            <option value="Education">Education</option>
           </select>
 
           <select class="border rounded-lg px-4 py-3 text-sm">

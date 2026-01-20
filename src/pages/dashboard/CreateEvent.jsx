@@ -129,9 +129,12 @@ const CreateEvent = () => {
               >
                 <option value="">Select a type</option>
                 <option value="Cleanup">Cleanup</option>
-                <option value="Plantation">Plantation</option>
+                <option value="Environment">Environment</option>
                 <option value="Donation">Donation</option>
                 <option value="Relief">Relief</option>
+                <option value="Social">Social</option>
+                <option value="Health">Health</option>
+                <option value="Education">Education</option>
               </Select>
               {errors.eventType && (
                 <p className="text-red text-sm mt-2">{errors.eventType}</p>
