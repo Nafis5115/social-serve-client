@@ -22,8 +22,8 @@ const UpcomingEvents = () => {
 
   if (loading)
     return (
-      <div className=" flex justify-center w-full items-center h-screen">
-        <span className="loading loading-spinner text-black loading-sm"></span>
+      <div className=" flex justify-center w-full items-start mt-20 h-screen">
+        <span className="loading loading-spinner text-black loading-xl"></span>
       </div>
     );
   return (

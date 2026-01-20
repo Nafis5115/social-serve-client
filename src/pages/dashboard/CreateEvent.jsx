@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useAxios from "../../hooks/useAxios";
+import useAuth from "../../hooks/useAuth";
 
 const CreateEvent = () => {
   const [responsibilities, setResponsibilities] = useState([""]);
@@ -15,9 +16,9 @@ const CreateEvent = () => {
   const axios = useAxios();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
   const validateForm = () => {
     const newErrors = {};
-
     if (!eventTitle.trim()) newErrors.eventTitle = "Event title is required";
     if (!eventType) newErrors.eventType = "Event type is required";
     if (!startDate) newErrors.startDate = "Start date is required";
@@ -71,6 +72,7 @@ const CreateEvent = () => {
       description,
       responsibilities,
       safetyGuidelines,
+      ownerEmail: user?.email,
       aiAssistance: checkAI,
     };
     console.log("Sending data:", eventData);
@@ -87,7 +89,7 @@ const CreateEvent = () => {
   if (loading)
     return (
       <div className=" flex justify-center w-full items-center h-screen">
-        <span className="loading loading-spinner loading-sm"></span>
+        <span className="loading loading-spinner loading-xl"></span>
       </div>
     );
   return (
@@ -126,10 +128,10 @@ const CreateEvent = () => {
                 onChange={(e) => setEventType(e.target.value)}
               >
                 <option value="">Select a type</option>
-                <option value="cleanup">Cleanup</option>
-                <option value="plantation">Plantation</option>
-                <option value="donation">Donation</option>
-                <option value="relief">Relief</option>
+                <option value="Cleanup">Cleanup</option>
+                <option value="Plantation">Plantation</option>
+                <option value="Donation">Donation</option>
+                <option value="Relief">Relief</option>
               </Select>
               {errors.eventType && (
                 <p className="text-red text-sm mt-2">{errors.eventType}</p>

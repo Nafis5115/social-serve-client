@@ -1,4 +1,5 @@
 import React from "react";
+import { formattedDate } from "../../helpers/formattedData";
 
 const EventCard = ({ event }) => {
   return (
@@ -10,7 +11,7 @@ const EventCard = ({ event }) => {
         </span>
         <h4 className="font-bold text-lg mt-3">{event.eventTitle}</h4>
         <p className="text-sm text-gray-600 mt-1">
-          📍 {event.location} • 🗓 {event.startDate}
+          📍 {event.location} • 🗓 {formattedDate(event.startDate)}
         </p>
         <a
           href="event-details.html"
