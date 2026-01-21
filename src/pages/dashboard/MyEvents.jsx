@@ -31,7 +31,6 @@ const MyEvents = () => {
         setMyEvents(remainingEvent);
       }
       setLoading(false);
-      console.log(res);
     } catch (error) {
       console.log(error);
     }

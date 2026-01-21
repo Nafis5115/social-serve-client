@@ -1,6 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
+import { formattedDate } from "../../helpers/formattedData";
+import { Link } from "react-router";
 
 const JoinedEvents = () => {
+  const [myJoins, setMyJoins] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const axios = useAxios();
+
+  useEffect(() => {
+    if (!user?.email) return;
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`/my-joins?email=${user?.email}`);
+        setMyJoins(res.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [axios, user]);
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-center h-screen">
+        <span className="loading loading-spinner loading-xl text-black"></span>
+      </div>
+    );
   return (
     <div className=" bg-soft">
       <div className="max-w-7xl mx-auto">
@@ -12,19 +40,9 @@ const JoinedEvents = () => {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <JoinedCard
-            title="Road Cleaning – Mirpur 10"
-            date="25 Feb 2026"
-            location="Dhaka"
-            role="Volunteer"
-          />
-
-          <JoinedCard
-            title="Flood Relief Operations"
-            date="02 Mar 2026"
-            location="Sylhet"
-            role="Support Team"
-          />
+          {myJoins.map((join) => (
+            <JoinedCard key={join._id} event={join.event} />
+          ))}
         </div>
       </div>
     </div>
@@ -33,24 +51,27 @@ const JoinedEvents = () => {
 
 export default JoinedEvents;
 
-const JoinedCard = ({ title, date, location, role }) => (
+const JoinedCard = ({ event }) => (
   <div className="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
     <div>
       <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">
         Joined
       </span>
 
-      <h3 className="font-bold text-lg mt-3">{title}</h3>
+      <h3 className="font-bold text-lg mt-3">{event.eventTitle}</h3>
 
-      <p className="text-sm text-gray-600 mt-1">📍 {location}</p>
+      <p className="text-sm text-gray-600 mt-1">📍 {event.location}</p>
 
-      <p className="text-sm text-gray-600">🗓 {date}</p>
-
-      <p className="text-sm text-gray-500 mt-2">Role: {role}</p>
+      <p className="text-sm text-gray-600">
+        🗓 {formattedDate(event.startDate)} - {formattedDate(event.endDate)}
+      </p>
     </div>
 
-    <button className="mt-6 bg-red text-white py-2 rounded hover:bg-rose">
+    <Link
+      to={`/event-details/${event._id}`}
+      className="mt-6 bg-red text-white py-2 rounded hover:bg-rose flex justify-center"
+    >
       View Event
-    </button>
+    </Link>
   </div>
 );

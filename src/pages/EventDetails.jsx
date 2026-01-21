@@ -24,7 +24,6 @@ const EventDetails = () => {
         setJoinedCount((prev) => prev + 1);
       }
       setLoading(false);
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +37,7 @@ const EventDetails = () => {
         const joined = res.data.some((join) => join.userEmail === user?.email);
 
         setIsJoined(joined);
-        console.log(res);
+
         setLoading(false);
       } catch (error) {
         console.log(error);
