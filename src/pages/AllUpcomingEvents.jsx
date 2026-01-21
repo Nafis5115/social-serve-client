@@ -77,41 +77,51 @@ const AllUpcomingEvents = () => {
               <span className="loading loading-spinner loading-lg text-center"></span>
             </div>
           )}
+
+          {!loading && events.length === 0 && (
+            <div className="text-center py-20">
+              <h3 className="text-xl font-semibold text-gray-600">
+                No events found
+              </h3>
+            </div>
+          )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
               <EventCard key={event._id} event={event}></EventCard>
             ))}
           </div>
-          <div className="flex justify-center mt-16 gap-2">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-              className="px-4 py-2 border rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
-            {[...Array(totalPages).keys()].map((num) => (
+          {events.length >= limit && totalPages > 1 && (
+            <div className="flex justify-center mt-16 gap-2">
               <button
-                key={num}
-                onClick={() => setPage(num + 1)}
-                className={`px-4 py-2 rounded ${
-                  page === num + 1
-                    ? "bg-red text-white"
-                    : "border hover:bg-soft"
-                }`}
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+                className="px-4 py-2 border rounded disabled:opacity-50"
               >
-                {num + 1}
+                Prev
               </button>
-            ))}
+              {[...Array(totalPages).keys()].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num + 1)}
+                  className={`px-4 py-2 rounded ${
+                    page === num + 1
+                      ? "bg-red text-white"
+                      : "border hover:bg-soft"
+                  }`}
+                >
+                  {num + 1}
+                </button>
+              ))}
 
-            <button
-              disabled={page === totalPages}
-              onClick={() => setPage(page + 1)}
-              className="px-4 py-2 border rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
+              <button
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+                className="px-4 py-2 border rounded disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </div>
