@@ -14,6 +14,7 @@ import CreateEvent from "../pages/dashboard/CreateEvent";
 import AllActiveEvents from "../pages/AllActiveEvents";
 import PrivateRoute from "./PrivateRoute";
 import axiosPublic from "../api/axiosPublic";
+import EditEvent from "../pages/dashboard/EditEvent";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,14 @@ const router = createBrowserRouter([
             element: (
               <PrivateRoute>
                 <CreateEvent></CreateEvent>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/edit-event/:id",
+            element: (
+              <PrivateRoute>
+                <EditEvent></EditEvent>
               </PrivateRoute>
             ),
           },

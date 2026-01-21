@@ -1,6 +1,32 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import useAxios from "../../hooks/useAxios";
+import useAuth from "../../hooks/useAuth";
+import { formattedDate } from "../../helpers/formattedData";
+import { Link } from "react-router";
 
 const MyEvents = () => {
+  const [myEvents, setMyEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const axios = useAxios();
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`/my-events?email=${user?.email}`);
+        setMyEvents(res.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [user, axios]);
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-center h-screen">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    );
   return (
     <div className="min-h-screen bg-soft">
       <div className="mx-auto">
@@ -16,43 +42,26 @@ const MyEvents = () => {
             <thead className="bg-gray-50">
               <tr className="text-left">
                 <th className="p-4">Event</th>
-                <th className="p-4">Date</th>
+                <th className="p-4">Start Date</th>
+                <th className="p-4">End Date</th>
                 <th className="p-4">Location</th>
-                <th className="p-4">Status</th>
+                <th className="p-4">Created At</th>
                 <th className="p-4">Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              <EventRow
-                title="Road Cleaning – Mirpur 10"
-                date="25 Feb 2026"
-                location="Dhaka"
-                status="Upcoming"
-              />
-              <EventRow
-                title="Tree Plantation – Gazipur"
-                date="10 Mar 2026"
-                location="Gazipur"
-                status="Active"
-              />
+              {myEvents.map((event) => (
+                <EventRow key={event._id} event={event}></EventRow>
+              ))}
             </tbody>
           </table>
         </div>
 
         <div className="md:hidden space-y-4">
-          <EventCard
-            title="Road Cleaning – Mirpur 10"
-            date="25 Feb 2026"
-            location="Dhaka"
-            status="Upcoming"
-          />
-          <EventCard
-            title="Tree Plantation – Gazipur"
-            date="10 Mar 2026"
-            location="Gazipur"
-            status="Active"
-          />
+          {myEvents.map((event) => (
+            <EventCard key={event._id} event={event}></EventCard>
+          ))}
         </div>
       </div>
     </div>
@@ -61,40 +70,50 @@ const MyEvents = () => {
 
 export default MyEvents;
 
-const EventRow = ({ title, date, location, status }) => (
+const EventRow = ({ event }) => (
   <tr className="border-t">
-    <td className="p-4 font-medium">{title}</td>
-    <td className="p-4">{date}</td>
-    <td className="p-4">{location}</td>
-    <td className="p-4">
-      <span className="px-3 py-1 rounded-full text-xs bg-red text-white">
-        {status}
-      </span>
-    </td>
+    <td className="p-4 font-medium">{event.eventTitle}</td>
+    <td className="p-4">{formattedDate(event.startDate)}</td>
+    <td className="p-4">{formattedDate(event.endDate)}</td>
+    <td className="p-4">{event.location}</td>
+    <td className="p-4">{formattedDate(event.createdAt)}</td>
+
     <td className="p-4 space-x-3">
-      <button className="text-green-500 font-semibold">View</button>
-      <button className="text-blue-500 font-semibold">Edit</button>
-      <button className="text-red font-semibold">Delete</button>
+      <Link
+        to={`/event-details/${event._id}`}
+        className="text-green-500 font-semibold"
+      >
+        View
+      </Link>
+      <Link
+        to={`/dashboard/edit-event/${event._id}`}
+        state={{ event }}
+        className="text-blue-500 font-semibold"
+      >
+        Edit
+      </Link>
+      <button className="text-red font-semibold cursor-pointer">Delete</button>
     </td>
   </tr>
 );
 
-const EventCard = ({ title, date, location, status }) => (
+const EventCard = ({ event }) => (
   <div className="bg-white rounded-xl shadow p-4">
     <div className="flex justify-between items-start">
-      <h3 className="font-semibold">{title}</h3>
-      <span className="px-3 py-1 rounded-full text-xs bg-red text-white">
-        {status}
-      </span>
+      <h3 className="font-semibold">{event.eventTitle}</h3>
     </div>
 
-    <p className="text-sm text-gray-600 mt-2">📍 {location}</p>
-    <p className="text-sm text-gray-600">🗓 {date}</p>
+    <p className="text-sm text-gray-600 mt-2">📍 {event.location}</p>
+    <p className="text-sm text-gray-600">
+      🗓 {formattedDate(event.startDate)} - {formattedDate(event.endDate)}
+    </p>
 
     <div className="flex gap-4 mt-4 text-sm font-semibold">
-      <button className="text-green-500">View</button>
-      <button className="text-blue-500">Edit</button>
-      <button className="text-red">Delete</button>
+      <Link to={`/event-details/${event._id}`} className="text-green-500">
+        View
+      </Link>
+      <Link className="text-blue-500">Edit</Link>
+      <button className="text-red cursor-pointer">Delete</button>
     </div>
   </div>
 );
