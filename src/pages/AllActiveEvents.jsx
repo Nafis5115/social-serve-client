@@ -9,12 +9,14 @@ const AllActiveEvents = () => {
   const [limit] = useState(6);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `/active-events?page=${page}&limit=${limit}`,
+          `/active-events?page=${page}&limit=${limit}&search=${search}&category=${category}`,
         );
         setEvents(res.data.events);
         setTotalPages(res.data.totalPages);
@@ -24,13 +26,8 @@ const AllActiveEvents = () => {
         setLoading(false);
       }
     })();
-  }, [axios, limit, page]);
-  if (loading)
-    return (
-      <div className=" flex justify-center w-full items-start mt-20 h-screen">
-        <span className="loading loading-spinner text-black loading-xl"></span>
-      </div>
-    );
+  }, [axios, limit, page, search, category]);
+
   return (
     <div class="bg-soft text-navy">
       <section class="bg-white py-14 shadow-sm">
@@ -39,12 +36,24 @@ const AllActiveEvents = () => {
         </h2>
         <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-4">
           <input
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
             type="text"
             placeholder="Search by event name..."
             class="border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
           />
 
-          <select class="border rounded-lg px-4 py-3 text-sm">
+          <select
+            class="border rounded-lg px-4 py-3 text-sm"
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setPage(1);
+            }}
+          >
             <option>All Categories</option>
             <option value="Cleanup">Cleanup</option>
             <option value="Environment">Environment</option>
@@ -59,12 +68,24 @@ const AllActiveEvents = () => {
 
       <section class="py-20">
         <div class="max-w-7xl mx-auto px-6">
+          {loading && (
+            <div className="flex justify-center items-start  h-screen">
+              <span className="loading loading-spinner loading-lg text-center"></span>
+            </div>
+          )}
+          {!loading && events.length === 0 && (
+            <div className="text-center py-20">
+              <h3 className="text-xl font-semibold text-gray-600">
+                No events found
+              </h3>
+            </div>
+          )}
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
               <EventCard key={event._id} event={event}></EventCard>
             ))}
           </div>
-          {events.length > 5 && (
+          {events.length >= limit && totalPages > 1 && (
             <div class="flex justify-center mt-16 gap-2">
               <button
                 disabled={page === 1}
