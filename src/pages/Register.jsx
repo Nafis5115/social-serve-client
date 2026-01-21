@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
+import useAxios from "../hooks/useAxios";
 
 const Register = () => {
   const { createUser, updateUser, googleLogin, user, loading } = useAuth();
@@ -8,22 +9,40 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [photoURL, setPhotoURL] = useState("");
-
   const location = useLocation();
   const redirect = location.state?.pathname || "/";
+  const axios = useAxios();
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await createUser(email, password).then((result) => console.log(result));
+      const result = await createUser(email, password);
+      const user = result.user;
       await updateUser(name, photoURL);
+      const newUser = {
+        name: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+      };
+      const res = await axios.post("/create-user", newUser);
+      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
   };
-  const handleGoogleRegister = () => {
-    googleLogin()
-      .then((data) => console.log(data))
-      .catch((e) => console.log(e));
+  const handleGoogleRegister = async () => {
+    try {
+      const result = await googleLogin();
+      const user = result.user;
+      const newUser = {
+        name: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+      };
+      const res = await axios.post("/create-user", newUser);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (loading)

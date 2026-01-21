@@ -3,13 +3,13 @@ import { useLoaderData } from "react-router";
 import { formattedDate } from "../helpers/formattedData";
 
 const EventDetails = () => {
-  const eventData = useLoaderData();
+  const data = useLoaderData();
 
   return (
     <div className="bg-soft text-navy">
       <section className="relative h-95">
         <img
-          src={eventData.thumbnailUrl}
+          src={data.event.thumbnailUrl}
           className="w-full h-full object-cover"
           alt="Event Banner"
         />
@@ -20,7 +20,7 @@ const EventDetails = () => {
           <div className="max-w-7xl  mx-auto ">
             <div className="px-6 pb-10 text-white">
               <h2 className="text-5xl text-center font-extrabold mt-4">
-                {eventData.eventTitle}
+                {data.event.eventTitle}
               </h2>
             </div>
           </div>
@@ -32,7 +32,7 @@ const EventDetails = () => {
           <div className="bg-white rounded-xl p-8 shadow">
             <h3 className="text-2xl font-bold mb-4">About This Event</h3>
             <p className="text-gray-700 leading-relaxed">
-              {eventData.description}
+              {data.event.description}
             </p>
           </div>
 
@@ -41,7 +41,7 @@ const EventDetails = () => {
               Volunteer Responsibilities
             </h3>
             <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              {eventData.responsibilities.map((responsibility, index) => (
+              {data.event.responsibilities.map((responsibility, index) => (
                 <li key={index}>{responsibility}</li>
               ))}
             </ul>
@@ -50,7 +50,7 @@ const EventDetails = () => {
           <div className="bg-white rounded-xl p-8 shadow">
             <h3 className="text-2xl font-bold mb-4">Safety & Guidelines</h3>
             <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              {eventData.safetyGuidelines.map((safetyGuideline, index) => (
+              {data.event.safetyGuidelines.map((safetyGuideline, index) => (
                 <li key={index}>{safetyGuideline}</li>
               ))}
             </ul>
@@ -61,7 +61,7 @@ const EventDetails = () => {
             <div className="h-64  rounded flex items-center justify-center text-gray-500">
               <iframe
                 className="w-full h-full"
-                src={`https://maps.google.com/maps?hl=en&q=${eventData.location}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
+                src={`https://maps.google.com/maps?hl=en&q=${data.event.location}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
               ></iframe>
             </div>
           </div>
@@ -74,16 +74,16 @@ const EventDetails = () => {
             <div className="space-y-3 text-sm">
               <p>
                 <strong>Start Date:</strong>{" "}
-                {formattedDate(eventData.startDate)}
+                {formattedDate(data.event.startDate)}
               </p>
               <p>
-                <strong>Start Date:</strong> {formattedDate(eventData.endDate)}
+                <strong>Start Date:</strong> {formattedDate(data.event.endDate)}
               </p>
               <p>
-                <strong>Location:</strong> {eventData.location}
+                <strong>Location:</strong> {data.event.location}
               </p>
               <p>
-                <strong>Event Type:</strong> {eventData.eventType}
+                <strong>Event Type:</strong> {data.event.eventType}
               </p>
               <p>
                 <strong>Participants:</strong> 320 Joined
@@ -96,13 +96,16 @@ const EventDetails = () => {
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow">
-            <h4 className="font-bold text-lg mb-4">Organizer</h4>
+            <h4 className="font-bold text-lg mb-4">Creator</h4>
 
             <div className="flex items-center gap-4">
-              <img src="https://i.pravatar.cc/60" className="rounded-full" />
+              <img
+                src={data.userInfo.photoURL}
+                className="w-12 h-12 rounded-full"
+              />
               <div>
-                <p className="font-semibold">Green Dhaka Initiative</p>
-                <p className="text-sm text-gray-500">{eventData.ownerEmail}</p>
+                <p className="font-semibold">{data.userInfo.name}</p>
+                <p className="text-sm text-gray-500">{data.userInfo.email}</p>
               </div>
             </div>
           </div>
