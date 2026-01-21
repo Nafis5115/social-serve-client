@@ -21,6 +21,21 @@ const MyEvents = () => {
       }
     })();
   }, [user, axios]);
+
+  const handleEventDelete = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/delete-event/${id}`);
+      if (res.data.deletedCount) {
+        const remainingEvent = myEvents.filter((event) => event._id !== id);
+        setMyEvents(remainingEvent);
+      }
+      setLoading(false);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (loading)
     return (
       <div className=" flex justify-center w-full items-center h-screen">
@@ -37,7 +52,7 @@ const MyEvents = () => {
           </p>
         </div>
 
-        <div className="hidden md:block bg-white rounded-xl shadow overflow-hidden">
+        <div className="hidden md:block bg-white rounded-xl shadow overflow-hidden mb-10">
           <table className="w-full text-sm">
             <thead className="bg-gray-50">
               <tr className="text-left">
@@ -52,7 +67,11 @@ const MyEvents = () => {
 
             <tbody>
               {myEvents.map((event) => (
-                <EventRow key={event._id} event={event}></EventRow>
+                <EventRow
+                  key={event._id}
+                  event={event}
+                  handleEventDelete={handleEventDelete}
+                ></EventRow>
               ))}
             </tbody>
           </table>
@@ -60,7 +79,11 @@ const MyEvents = () => {
 
         <div className="md:hidden space-y-4">
           {myEvents.map((event) => (
-            <EventCard key={event._id} event={event}></EventCard>
+            <EventCard
+              key={event._id}
+              event={event}
+              handleEventDelete={handleEventDelete}
+            ></EventCard>
           ))}
         </div>
       </div>
@@ -70,7 +93,7 @@ const MyEvents = () => {
 
 export default MyEvents;
 
-const EventRow = ({ event }) => (
+const EventRow = ({ event, handleEventDelete }) => (
   <tr className="border-t">
     <td className="p-4 font-medium">{event.eventTitle}</td>
     <td className="p-4">{formattedDate(event.startDate)}</td>
@@ -92,12 +115,17 @@ const EventRow = ({ event }) => (
       >
         Edit
       </Link>
-      <button className="text-red font-semibold cursor-pointer">Delete</button>
+      <button
+        onClick={() => handleEventDelete(event._id)}
+        className="text-red font-semibold cursor-pointer"
+      >
+        Delete
+      </button>
     </td>
   </tr>
 );
 
-const EventCard = ({ event }) => (
+const EventCard = ({ event, handleEventDelete }) => (
   <div className="bg-white rounded-xl shadow p-4">
     <div className="flex justify-between items-start">
       <h3 className="font-semibold">{event.eventTitle}</h3>
@@ -112,8 +140,15 @@ const EventCard = ({ event }) => (
       <Link to={`/event-details/${event._id}`} className="text-green-500">
         View
       </Link>
-      <Link className="text-blue-500">Edit</Link>
-      <button className="text-red cursor-pointer">Delete</button>
+      <Link to={`/dashboard/edit-event/${event._id}`} className="text-blue-500">
+        Edit
+      </Link>
+      <button
+        onClick={() => handleEventDelete(event._id)}
+        className="text-red cursor-pointer"
+      >
+        Delete
+      </button>
     </div>
   </div>
 );
