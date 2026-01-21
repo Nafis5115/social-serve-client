@@ -9,13 +9,17 @@ const AllUpcomingEvents = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState("");
+
+  const [category, setCategory] = useState("");
+
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
 
         const res = await axios.get(
-          `/upcoming-events?page=${page}&limit=${limit}`,
+          `/upcoming-events?page=${page}&limit=${limit}&search=${search}&category=${category}`,
         );
 
         setEvents(res.data.events);
@@ -26,29 +30,35 @@ const AllUpcomingEvents = () => {
         setLoading(false);
       }
     })();
-  }, [axios, page, limit]);
+  }, [axios, page, limit, category, search]);
 
-  if (loading)
-    return (
-      <div className=" flex justify-center w-full items-start mt-20 h-screen">
-        <span className="loading loading-spinner text-black loading-xl"></span>
-      </div>
-    );
   return (
     <div className="bg-soft text-navy">
       <section className="bg-white py-14 shadow-sm">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-10">
-          Upcoming Events
+          All Upcoming Events
         </h2>
         <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-4">
           <input
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
             type="text"
             placeholder="Search by event name..."
             className="border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
           />
 
-          <select className="border rounded-lg px-4 py-3 text-sm">
-            <option>All Categories</option>
+          <select
+            value={category}
+            className="border rounded-lg px-4 py-3 text-sm"
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="">All Categories</option>
             <option value="Cleanup">Cleanup</option>
             <option value="Environment">Environment</option>
             <option value="Donation">Donation</option>
@@ -60,45 +70,48 @@ const AllUpcomingEvents = () => {
         </div>
       </section>
 
-      <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          {loading && (
+            <div className="flex justify-center items-start  h-screen">
+              <span className="loading loading-spinner loading-lg text-center"></span>
+            </div>
+          )}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
               <EventCard key={event._id} event={event}></EventCard>
             ))}
           </div>
-          {events.length > 5 && (
-            <div class="flex justify-center mt-16 gap-2">
+          <div className="flex justify-center mt-16 gap-2">
+            <button
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+              className="px-4 py-2 border rounded disabled:opacity-50"
+            >
+              Prev
+            </button>
+            {[...Array(totalPages).keys()].map((num) => (
               <button
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-                className="px-4 py-2 border rounded disabled:opacity-50"
+                key={num}
+                onClick={() => setPage(num + 1)}
+                className={`px-4 py-2 rounded ${
+                  page === num + 1
+                    ? "bg-red text-white"
+                    : "border hover:bg-soft"
+                }`}
               >
-                Prev
+                {num + 1}
               </button>
-              {[...Array(totalPages).keys()].map((num) => (
-                <button
-                  key={num}
-                  onClick={() => setPage(num + 1)}
-                  className={`px-4 py-2 rounded ${
-                    page === num + 1
-                      ? "bg-red text-white"
-                      : "border hover:bg-soft"
-                  }`}
-                >
-                  {num + 1}
-                </button>
-              ))}
+            ))}
 
-              <button
-                disabled={page === totalPages}
-                onClick={() => setPage(page + 1)}
-                className="px-4 py-2 border rounded disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          )}
+            <button
+              disabled={page === totalPages}
+              onClick={() => setPage(page + 1)}
+              className="px-4 py-2 border rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </section>
     </div>
