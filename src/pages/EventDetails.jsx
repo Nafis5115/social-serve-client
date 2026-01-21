@@ -1,10 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import { formattedDate } from "../helpers/formattedData";
+import useAxios from "../hooks/useAxios";
+import useAuth from "../hooks/useAuth";
 
 const EventDetails = () => {
   const data = useLoaderData();
+  const [loading, setLoading] = useState(false);
+  const axios = useAxios();
+  const { user } = useAuth();
+  const [isJoined, setIsJoined] = useState(false);
+  const [joinedCount, setJoinedCount] = useState(0);
+  const handleEventJoin = async () => {
+    try {
+      setLoading(true);
+      const newJoin = {
+        eventId: data.event._id,
+        userEmail: user?.email,
+      };
+      const res = await axios.post("/create-join", newJoin);
+      if (res.data.insertedId) {
+        setIsJoined(true);
+        setJoinedCount((prev) => prev + 1);
+      }
+      setLoading(false);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`event-joins/${data.event._id}`);
+        setJoinedCount(res.data.length);
+        const joined = res.data.some((join) => join.userEmail === user?.email);
 
+        setIsJoined(joined);
+        console.log(res);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [axios, data, user]);
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-center h-screen">
+        <span className="loading loading-spinner loading-xl text-black"></span>
+      </div>
+    );
   return (
     <div className="bg-soft text-navy">
       <section className="relative h-95">
@@ -86,13 +132,24 @@ const EventDetails = () => {
                 <strong>Event Type:</strong> {data.event.eventType}
               </p>
               <p>
-                <strong>Participants:</strong> 320 Joined
+                <strong>Participants:</strong> {joinedCount} Joined
               </p>
             </div>
-
-            <button className="mt-6 w-full bg-red text-white py-3 rounded-lg font-semibold hover:bg-rose">
-              Join Event
-            </button>
+            {loading ? (
+              <span className="loading loading-spinner loading-xl"></span>
+            ) : (
+              <button
+                onClick={handleEventJoin}
+                disabled={isJoined}
+                className={`mt-6 w-full ${isJoined ? "bg-green-500 hover:bg-green-600" : "bg-red hover:bg-rose"} text-white py-3 rounded-lg font-semibold `}
+              >
+                {loading ? (
+                  <span className="loading loading-spinner loading-xl"></span>
+                ) : (
+                  <p>{isJoined ? "Joined" : "Join Event"}</p>
+                )}
+              </button>
+            )}
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow">

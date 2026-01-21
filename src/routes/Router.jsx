@@ -97,7 +97,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/event-details/:id",
-        Component: EventDetails,
+        element: (
+          <PrivateRoute>
+            <EventDetails></EventDetails>
+          </PrivateRoute>
+        ),
         loader: async ({ params }) => {
           const res = await axiosPublic.get(`/event-details/${params.id}`);
           return res.data;
