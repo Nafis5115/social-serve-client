@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 const CreateEvent = () => {
   const [responsibilities, setResponsibilities] = useState([""]);
@@ -17,6 +18,7 @@ const CreateEvent = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
   const validateForm = () => {
     const newErrors = {};
     if (!eventTitle.trim()) newErrors.eventTitle = "Event title is required";
@@ -82,6 +84,7 @@ const CreateEvent = () => {
       setLoading(false);
       console.log(res.data);
       resetForm();
+      navigate("/dashboard/my-events");
     } catch (err) {
       console.error(err);
     }

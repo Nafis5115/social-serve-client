@@ -5,21 +5,25 @@ import { useLocation, useNavigate } from "react-router";
 
 const EditEvent = () => {
   const { state } = useLocation();
-  const event = state?.event;
+  const event = state?.event || {};
+
+  const [eventTitle, setEventTitle] = useState(event.eventTitle || "");
+  const [eventType, setEventType] = useState(event.eventType || "");
+  const [startDate, setStartDate] = useState(event.startDate || "");
+  const [endDate, setEndDate] = useState(event.endDate || "");
+  const [thumbnailUrl, setThumbnailUrl] = useState(event.thumbnailUrl || "");
+  const [location, setLocation] = useState(event.location || "");
+  const [description, setDescription] = useState(event.description || "");
+  const [regenerateAI, setRegenerateAI] = useState(false);
+
   const [responsibilities, setResponsibilities] = useState(
-    event.responsibilities,
+    event.responsibilities?.length ? event.responsibilities : [""],
   );
+
   const [safetyGuidelines, setSafetyGuidelines] = useState(
-    event.safetyGuidelines,
+    event.safetyGuidelines?.length ? event.safetyGuidelines : [""],
   );
-  const [eventTitle, setEventTitle] = useState(event.eventTitle);
-  const [eventType, setEventType] = useState(event.eventType);
-  const [startDate, setStartDate] = useState(event.startDate);
-  const [endDate, setEndDate] = useState(event.endDate);
-  const [thumbnailUrl, setThumbnailUrl] = useState(event.thumbnailUrl);
-  const [location, setLocation] = useState(event.location);
-  const [description, setDescription] = useState(event.description);
-  const [checkAI, setCheckAI] = useState(event.checkAI);
+
   const axios = useAxios();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -35,7 +39,7 @@ const EditEvent = () => {
     if (!location.trim()) newErrors.location = "Location is required";
     if (!description.trim()) newErrors.description = "Description is required";
 
-    if (!checkAI) {
+    if (!regenerateAI) {
       const validResponsibilities = responsibilities.filter(
         (r) => r.trim() !== "",
       );
@@ -73,16 +77,18 @@ const EditEvent = () => {
       thumbnailUrl,
       location,
       description,
-      responsibilities,
-      safetyGuidelines,
       ownerEmail: user?.email,
-      aiAssistance: checkAI,
+      regenerateAI,
     };
+    if (!regenerateAI) {
+      eventData.responsibilities = responsibilities;
+      eventData.safetyGuidelines = safetyGuidelines;
+    }
     console.log("Sending data:", eventData);
     try {
       setLoading(true);
-      const res = await axios.patch(`/edit-event/${event._id}`, eventData);
-      await setLoading(false);
+      const res = await axios.patch(`/update-event/${event._id}`, eventData);
+      setLoading(false);
       navigate("/dashboard/my-events");
       console.log(res.data);
     } catch (err) {
@@ -188,8 +194,8 @@ const EditEvent = () => {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={checkAI}
-                  onChange={(e) => setCheckAI(e.target.checked)}
+                  checked={regenerateAI}
+                  onChange={(e) => setRegenerateAI(e.target.checked)}
                   className="accent-red"
                 />
                 <span className="text-sm font-medium">Enable AI</span>
@@ -221,11 +227,13 @@ const EditEvent = () => {
               <p className="text-red text-sm mt-2">{errors.description}</p>
             )}
           </div>
-          {!checkAI && (
+          {!regenerateAI && (
             <div
               className={`transition-all duration-300 ease-in-out
             ${
-              checkAI ? "opacity-0 -translate-y-2" : "opacity-100 translate-y-0"
+              regenerateAI
+                ? "opacity-0 -translate-y-2"
+                : "opacity-100 translate-y-0"
             }`}
             >
               <div className="mb-8">
