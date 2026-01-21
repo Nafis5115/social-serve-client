@@ -90,7 +90,7 @@ const AllUpcomingEvents = () => {
               <EventCard key={event._id} event={event}></EventCard>
             ))}
           </div>
-          {events.length >= limit && totalPages > 1 && (
+          {totalPages > 1 && (
             <div className="flex justify-center mt-16 gap-2">
               <button
                 disabled={page === 1}

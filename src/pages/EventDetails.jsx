@@ -102,7 +102,7 @@ const EventDetails = () => {
               <img src="https://i.pravatar.cc/60" className="rounded-full" />
               <div>
                 <p className="font-semibold">Green Dhaka Initiative</p>
-                <p className="text-sm text-gray-500">Verified Organizer</p>
+                <p className="text-sm text-gray-500">{eventData.ownerEmail}</p>
               </div>
             </div>
           </div>
