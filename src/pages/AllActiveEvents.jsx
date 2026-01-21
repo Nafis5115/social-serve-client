@@ -29,12 +29,12 @@ const AllActiveEvents = () => {
   }, [axios, limit, page, search, category]);
 
   return (
-    <div class="bg-soft text-navy">
-      <section class="bg-white py-14 shadow-sm">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-10">
+    <div className="bg-soft text-navy">
+      <section className="bg-white py-14 shadow-sm">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-10">
           Active Events
         </h2>
-        <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-4">
+        <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-4">
           <input
             value={search}
             onChange={(e) => {
@@ -43,11 +43,11 @@ const AllActiveEvents = () => {
             }}
             type="text"
             placeholder="Search by event name..."
-            class="border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
+            className="border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
           />
 
           <select
-            class="border rounded-lg px-4 py-3 text-sm"
+            className="border rounded-lg px-4 py-3 text-sm"
             value={category}
             onChange={(e) => {
               setCategory(e.target.value);
@@ -66,8 +66,8 @@ const AllActiveEvents = () => {
         </div>
       </section>
 
-      <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
           {loading && (
             <div className="flex justify-center items-start  h-screen">
               <span className="loading loading-spinner loading-lg text-center"></span>
@@ -80,13 +80,13 @@ const AllActiveEvents = () => {
               </h3>
             </div>
           )}
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
               <EventCard key={event._id} event={event}></EventCard>
             ))}
           </div>
           {totalPages > 1 && (
-            <div class="flex justify-center mt-16 gap-2">
+            <div className="flex justify-center mt-16 gap-2">
               <button
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}

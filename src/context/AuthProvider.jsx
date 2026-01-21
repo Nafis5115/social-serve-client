@@ -10,12 +10,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import auth from "../firebase/firebase.init";
+import useAxios from "../hooks/useAxios";
 
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const axios = useAxios();
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -46,9 +48,16 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        console.log(currentUser);
         setUser(currentUser);
+        if (currentUser) {
+          const loggedUser = { email: currentUser.email };
+          axios.post("/getToken", loggedUser).then((data) => {
+            localStorage.setItem("token", data.data.token);
+          });
+        }
+        console.log(currentUser);
       } else {
+        localStorage.removeItem("token");
         console.log("logged out");
       }
       setLoading(false);
@@ -57,7 +66,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [axios]);
 
   const authInfo = {
     createUser,
