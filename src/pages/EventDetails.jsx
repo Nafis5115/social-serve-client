@@ -44,6 +44,23 @@ const EventDetails = () => {
       }
     })();
   }, [axios, data, user]);
+
+  const handleLeaveEvent = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.delete("/delete-join", {
+        data: {
+          eventId: data.event._id,
+          userEmail: user?.email,
+        },
+      });
+      setIsJoined(false);
+      setLoading(false);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (loading)
     return (
       <div className=" flex justify-center w-full items-center h-screen">
@@ -134,19 +151,19 @@ const EventDetails = () => {
                 <strong>Participants:</strong> {joinedCount} Joined
               </p>
             </div>
-            {loading ? (
-              <span className="loading loading-spinner loading-xl"></span>
-            ) : (
+            {!isJoined ? (
               <button
                 onClick={handleEventJoin}
-                disabled={isJoined}
-                className={`mt-6 w-full ${isJoined ? "bg-green-500 hover:bg-green-600" : "bg-red hover:bg-rose"} text-white py-3 rounded-lg font-semibold `}
+                className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold "
               >
-                {loading ? (
-                  <span className="loading loading-spinner loading-xl"></span>
-                ) : (
-                  <p>{isJoined ? "Joined" : "Join Event"}</p>
-                )}
+                <p>Join Event</p>
+              </button>
+            ) : (
+              <button
+                onClick={handleLeaveEvent}
+                className="mt-6 w-full bg-red hover:bg-rose text-white py-3 rounded-lg font-semibold"
+              >
+                <p>Leave Event</p>
               </button>
             )}
           </div>

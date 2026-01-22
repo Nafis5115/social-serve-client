@@ -38,7 +38,13 @@ const JoinedEvents = () => {
             Events you have joined as a volunteer
           </p>
         </div>
-
+        {myJoins.length === 0 && (
+          <div className="flex justify-center w-full items-center h-screen pb-40">
+            <h3 className="text-xl font-semibold text-gray-600">
+              No events found
+            </h3>
+          </div>
+        )}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {myJoins.map((join) => (
             <JoinedCard key={join._id} event={join.event} />

@@ -50,31 +50,38 @@ const MyEvents = () => {
             Events you have created and are managing
           </p>
         </div>
+        {myEvents.length === 0 ? (
+          <div className="flex justify-center w-full items-center h-screen pb-40">
+            <h3 className="text-xl font-semibold text-gray-600">
+              No events found
+            </h3>
+          </div>
+        ) : (
+          <div className="hidden md:block bg-white rounded-xl shadow overflow-hidden mb-10">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50">
+                <tr className="text-left">
+                  <th className="p-4">Event</th>
+                  <th className="p-4">Start Date</th>
+                  <th className="p-4">End Date</th>
+                  <th className="p-4">Location</th>
+                  <th className="p-4">Created At</th>
+                  <th className="p-4">Actions</th>
+                </tr>
+              </thead>
 
-        <div className="hidden md:block bg-white rounded-xl shadow overflow-hidden mb-10">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50">
-              <tr className="text-left">
-                <th className="p-4">Event</th>
-                <th className="p-4">Start Date</th>
-                <th className="p-4">End Date</th>
-                <th className="p-4">Location</th>
-                <th className="p-4">Created At</th>
-                <th className="p-4">Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {myEvents.map((event) => (
-                <EventRow
-                  key={event._id}
-                  event={event}
-                  handleEventDelete={handleEventDelete}
-                ></EventRow>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              <tbody>
+                {myEvents.map((event) => (
+                  <EventRow
+                    key={event._id}
+                    event={event}
+                    handleEventDelete={handleEventDelete}
+                  ></EventRow>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div className="md:hidden space-y-4">
           {myEvents.map((event) => (
