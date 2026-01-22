@@ -32,7 +32,7 @@ const AllActiveEvents = () => {
     <div className="bg-soft text-navy">
       <section className="bg-white py-14 shadow-sm">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-10">
-          Active Events
+          All Active Events
         </h2>
         <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-4">
           <input

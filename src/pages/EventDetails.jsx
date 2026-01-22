@@ -122,6 +122,7 @@ const EventDetails = () => {
             <h3 className="text-2xl font-bold mb-4">Event Location</h3>
             <div className="h-64  rounded flex items-center justify-center text-gray-500">
               <iframe
+                loading="lazy"
                 className="w-full h-full"
                 src={`https://maps.google.com/maps?hl=en&q=${data.event.location}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
               ></iframe>

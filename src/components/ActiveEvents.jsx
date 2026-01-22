@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
+import useAxios from "../hooks/useAxios";
+import { daysAgo } from "../helpers/daysAgo";
 
 const ActiveEvents = () => {
+  const [events, setEvents] = useState([]);
+  const axios = useAxios();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get("/active-events?page=1&limit=4");
+        setEvents(res.data.events);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [axios]);
+
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-start mt-20 h-screen">
+        <span className="loading loading-spinner text-black loading-xl"></span>
+      </div>
+    );
   return (
     <div>
       <section className="bg-navy text-white py-24">
@@ -11,34 +35,14 @@ const ActiveEvents = () => {
           </h3>
 
           <div className="grid md:grid-cols-2 gap-10">
-            <div className="bg-white/10 p-8 rounded-xl">
-              <h4 className="font-bold text-xl">Urban Cleanup – Dhaka North</h4>
-              <p className="text-sm text-white/70 mt-2">
-                Started 2 days ago • 320 volunteers joined
-              </p>
-            </div>
-            <div className="bg-white/10 p-8 rounded-xl">
-              <h4 className="font-bold text-xl">
-                School Donation Drive – Rangpur
-              </h4>
-              <p className="text-sm text-white/70 mt-2">
-                Ongoing • Supplies being distributed
-              </p>
-            </div>
-            <div className="bg-white/10 p-8 rounded-xl">
-              <h4 className="font-bold text-xl">River Cleaning – Buriganga</h4>
-              <p className="text-sm text-white/70 mt-2">
-                Multi-phase operation
-              </p>
-            </div>
-            <div className="bg-white/10 p-8 rounded-xl">
-              <h4 className="font-bold text-xl">
-                Tree Plantation – Coastal Areas
-              </h4>
-              <p className="text-sm text-white/70 mt-2">
-                Disaster prevention initiative
-              </p>
-            </div>
+            {events.map((event) => (
+              <div key={event._id} className="bg-white/10 p-8 rounded-xl">
+                <h4 className="font-bold text-xl">{event.eventTitle}</h4>
+                <p className="text-sm text-white/70 mt-2">
+                  Started {daysAgo(event.startDate)} days ago
+                </p>
+              </div>
+            ))}
           </div>
         </div>
         <div className="text-center mt-14 cursor-pointer">

@@ -12,7 +12,7 @@ const Home = () => {
       <Hero></Hero>
       <UpcomingEvents></UpcomingEvents>
       <ActiveEvents></ActiveEvents>
-      <FeaturedPrograms></FeaturedPrograms>
+      {/* <FeaturedPrograms></FeaturedPrograms> */}
       <PlatformFeatures></PlatformFeatures>
       <WhoUse></WhoUse>
       <FAQ></FAQ>
