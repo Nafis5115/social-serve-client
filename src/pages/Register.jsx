@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
-  const { createUser, updateUser, googleLogin, user, loading } = useAuth();
+  const { createUser, updateUser, googleLogin, user } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -12,9 +14,28 @@ const Register = () => {
   const location = useLocation();
   const redirect = location.state?.pathname || "/";
   const axios = useAxios();
+  const [errors, setErrors] = useState({});
+  const validateForm = () => {
+    const newErrors = {};
+    if (!name.trim()) newErrors.name = "Name is required";
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (!photoURL.trim()) newErrors.photoURL = "PhotoURL is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     try {
+      setLoading(true);
       const result = await createUser(email, password);
       const user = result.user;
       await updateUser(name, photoURL);
@@ -24,9 +45,17 @@ const Register = () => {
         email: user.email,
       };
       const res = await axios.post("/create-user", newUser);
+      setLoading(false);
       console.log(res.data);
     } catch (error) {
-      console.error(error);
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("This Email Is Already Registered");
+      }
+      if (error.code === "auth/invalid-email") {
+        toast.error("Invalid Email Address");
+      }
+    } finally {
+      setLoading(false);
     }
   };
   const handleGoogleRegister = async () => {
@@ -75,6 +104,7 @@ const Register = () => {
               placeholder="Your full name"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
+            <p className="text-red">{errors.name}</p>
           </div>
 
           <div>
@@ -87,6 +117,7 @@ const Register = () => {
               placeholder="you@example.com"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
+            <p className="text-red">{errors.email}</p>
           </div>
 
           <div>
@@ -99,6 +130,7 @@ const Register = () => {
               placeholder="https://image-link.com"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
+            <p className="text-red">{errors.photoURL}</p>
           </div>
 
           <div>
@@ -109,12 +141,14 @@ const Register = () => {
               placeholder="Minimum 6 characters"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
+            <p className="text-red">{errors.password}</p>
           </div>
 
           <button className="w-full bg-red text-white py-3 rounded-lg font-semibold hover:bg-rose transition">
             Create Account
           </button>
         </form>
+        <Toaster></Toaster>
         <div className="flex items-center gap-4 my-6">
           <div className="flex-1 h-px bg-gray-200"></div>
           <span className="text-xs text-gray-400">OR</span>

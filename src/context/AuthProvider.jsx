@@ -18,9 +18,13 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const axios = useAxios();
-  const createUser = (email, password) => {
-    setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+  const createUser = async (email, password) => {
+    try {
+      setLoading(true);
+      return await createUserWithEmailAndPassword(auth, email, password);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateUser = (name, photoURL) => {
@@ -38,7 +42,7 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const logoutUser = () => {
+  const logoutUser = async () => {
     return signOut(auth).then(() => {
       setUser(null);
       setLoading(false);
