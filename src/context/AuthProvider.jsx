@@ -34,8 +34,13 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  const loginUser = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const loginUser = async (email, password) => {
+    try {
+      setLoading(true);
+      return await signInWithEmailAndPassword(auth, email, password);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const googleLogin = () => {

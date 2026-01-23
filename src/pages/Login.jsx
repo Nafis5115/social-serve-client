@@ -1,19 +1,35 @@
 import React, { useState } from "react";
 import { Link, Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
-
+import toast, { Toaster } from "react-hot-toast";
+import { Eye, EyeOff } from "lucide-react";
 const Login = () => {
   const { loginUser, googleLogin, user, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const redirect = location.state?.pathname || "/";
-  const handleLogin = (e) => {
+  const validateForm = () => {
+    const newErrors = {};
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (!password.trim()) newErrors.password = "Password is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  const handleLogin = async (e) => {
     e.preventDefault();
-    loginUser(email, password)
-      .then((result) => console.log(result))
-      .catch((e) => console.log(e));
+    if (!validateForm()) return;
+    try {
+      const res = await loginUser(email, password);
+      console.log(res);
+    } catch (error) {
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Invalid Credential.");
+      }
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -47,27 +63,43 @@ const Login = () => {
               Email Address
             </label>
             <input
+              value={email}
               type="email"
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
+              placeholder="Enter your email address"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
+            <p className="text-red">{errors.email}</p>
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-sm font-semibold mb-1">Password</label>
             <input
-              type="password"
+              value={password}
+              type={`${!showPassword ? "password" : "text"}`}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
+              placeholder="Enter your password"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary "
             />
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-10 cursor-pointer"
+            >
+              {!showPassword ? (
+                <Eye size={20}></Eye>
+              ) : (
+                <EyeOff size={20}></EyeOff>
+              )}
+            </div>
+
+            <p className="text-red">{errors.password}</p>
           </div>
 
           <button className="w-full bg-red text-white py-3 rounded-lg font-semibold hover:bg-rose transition">
             Login
           </button>
         </form>
+        <Toaster></Toaster>
 
         <div className="flex items-center gap-4 my-6">
           <div className="flex-1 h-px bg-gray-200"></div>

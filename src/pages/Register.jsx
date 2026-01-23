@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
 import toast, { Toaster } from "react-hot-toast";
-
+import { Eye, EyeOff } from "lucide-react";
 const Register = () => {
   const { createUser, updateUser, googleLogin, user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -11,12 +11,14 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const redirect = location.state?.pathname || "/";
   const axios = useAxios();
   const [errors, setErrors] = useState({});
   const validateForm = () => {
     const newErrors = {};
+    setErrors({});
     if (!name.trim()) newErrors.name = "Name is required";
     if (!email.trim()) newErrors.email = "Email is required";
     if (!password.trim()) {
@@ -99,9 +101,10 @@ const Register = () => {
               Full Name
             </label>
             <input
+              value={name}
               onChange={(e) => setName(e.target.value)}
               type="text"
-              placeholder="Your full name"
+              placeholder="Enter your full name"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
             <p className="text-red">{errors.name}</p>
@@ -112,9 +115,10 @@ const Register = () => {
               Email Address
             </label>
             <input
+              value={email}
               type="email"
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
+              placeholder="Enter your email address"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
             <p className="text-red">{errors.email}</p>
@@ -125,22 +129,34 @@ const Register = () => {
               Photo URL
             </label>
             <input
+              value={photoURL}
               onChange={(e) => setPhotoURL(e.target.value)}
               type="text"
-              placeholder="https://image-link.com"
+              placeholder="Enter your photo-URL"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
             <p className="text-red">{errors.photoURL}</p>
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-sm font-semibold mb-1">Password</label>
             <input
-              type="password"
+              value={password}
+              type={`${!showPassword ? "password" : "text"}`}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Minimum 6 characters"
+              placeholder="Enter your password"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
             />
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-10 cursor-pointer"
+            >
+              {!showPassword ? (
+                <Eye size={20}></Eye>
+              ) : (
+                <EyeOff size={20}></EyeOff>
+              )}
+            </div>
             <p className="text-red">{errors.password}</p>
           </div>
 
