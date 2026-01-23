@@ -54,7 +54,11 @@ const EventDetails = () => {
           userEmail: user?.email,
         },
       });
-      setIsJoined(false);
+      if (res.data.deletedCount > 0) {
+        setIsJoined(false);
+        setJoinedCount((prev) => prev - 1);
+      }
+
       setLoading(false);
       console.log(res);
     } catch (error) {

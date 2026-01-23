@@ -1,31 +1,32 @@
 import { useEffect, useState } from "react";
-import useAxios from "../../hooks/useAxios";
+
 import useAuth from "../../hooks/useAuth";
 import { formattedDate } from "../../helpers/formattedData";
 import { Link } from "react-router";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const MyEvents = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const axios = useAxios();
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/my-events?email=${user?.email}`);
+        const res = await axiosSecure.get(`/my-events?email=${user?.email}`);
         setMyEvents(res.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [user, axios]);
+  }, [user, axiosSecure]);
 
   const handleEventDelete = async (id) => {
     try {
       setLoading(true);
-      const res = await axios.delete(`/delete-event/${id}`);
+      const res = await axiosSecure.delete(`/delete-event/${id}`);
       if (res.data.deletedCount) {
         const remainingEvent = myEvents.filter((event) => event._id !== id);
         setMyEvents(remainingEvent);
