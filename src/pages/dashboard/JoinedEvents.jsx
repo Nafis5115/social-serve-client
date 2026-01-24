@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import useAxios from "../../hooks/useAxios";
+
 import { formattedDate } from "../../helpers/formattedData";
 import { Link } from "react-router";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const JoinedEvents = () => {
   const [myJoins, setMyJoins] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const axios = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (!user?.email) return;
     (async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/my-joins?email=${user?.email}`);
+        const res = await axiosSecure.get(`/my-joins?email=${user?.email}`);
         setMyJoins(res.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [axios, user]);
+  }, [axiosSecure, user]);
   if (loading)
     return (
       <div className=" flex justify-center w-full items-center h-screen">
