@@ -75,7 +75,9 @@ const Navbar = () => {
                     Dashboard
                   </Link>
                   <span
-                    onClick={logoutUser}
+                    onClick={() =>
+                      document.getElementById("signout-modal").showModal()
+                    }
                     className="block px-4 py-2 hover:bg-gray-100"
                   >
                     Sign out
@@ -138,10 +140,9 @@ const Navbar = () => {
                   Dashboard
                 </Link>
                 <span
-                  onClick={() => {
-                    logoutUser();
-                    setOpen(false);
-                  }}
+                  onClick={() =>
+                    document.getElementById("signout-modal").showModal()
+                  }
                   className="block hover:text-red cursor-pointer"
                 >
                   Sign out
@@ -161,6 +162,21 @@ const Navbar = () => {
           )}
         </nav>
       </div>
+      <dialog id="signout-modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Do you want sign out?</h3>
+
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn bg-gray-50 text-black mr-4">No</button>
+              <button onClick={logoutUser} className="btn bg-red">
+                Yes
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </header>
   );
 };

@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 const MyEvents = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteEventId, setDeleteEventId] = useState(null);
+
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
@@ -30,7 +32,7 @@ const MyEvents = () => {
       if (res.data.deletedCount) {
         const remainingEvent = myEvents.filter((event) => event._id !== id);
         setMyEvents(remainingEvent);
-        toast.success("Successfully Deleted event.");
+        toast.success("Successfully deleted event.");
       }
       setLoading(false);
     } catch (error) {
@@ -77,7 +79,7 @@ const MyEvents = () => {
                   <EventRow
                     key={event._id}
                     event={event}
-                    handleEventDelete={handleEventDelete}
+                    setDeleteEventId={setDeleteEventId}
                   ></EventRow>
                 ))}
               </tbody>
@@ -90,18 +92,44 @@ const MyEvents = () => {
             <EventCard
               key={event._id}
               event={event}
-              handleEventDelete={handleEventDelete}
+              setDeleteEventId={setDeleteEventId}
             ></EventCard>
           ))}
         </div>
       </div>
+      {deleteEventId && (
+        <dialog open className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg text-white">Are you sure?</h3>
+
+            <div className="modal-action">
+              <button
+                className="btn bg-gray-50 text-black"
+                onClick={() => setDeleteEventId(null)}
+              >
+                No
+              </button>
+
+              <button
+                className="btn bg-red"
+                onClick={() => {
+                  handleEventDelete(deleteEventId);
+                  setDeleteEventId(null);
+                }}
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
     </div>
   );
 };
 
 export default MyEvents;
 
-const EventRow = ({ event, handleEventDelete }) => (
+const EventRow = ({ event, setDeleteEventId }) => (
   <tr className="border-t">
     <td className="p-4 font-medium">{event.eventTitle}</td>
     <td className="p-4">{formattedDate(event.startDate)}</td>
@@ -124,7 +152,8 @@ const EventRow = ({ event, handleEventDelete }) => (
         Edit
       </Link>
       <button
-        onClick={() => handleEventDelete(event._id)}
+        // onClick={() => handleEventDelete(event._id)}
+        onClick={() => setDeleteEventId(event._id)}
         className="text-red font-semibold cursor-pointer"
       >
         Delete
@@ -133,7 +162,7 @@ const EventRow = ({ event, handleEventDelete }) => (
   </tr>
 );
 
-const EventCard = ({ event, handleEventDelete }) => (
+const EventCard = ({ event, setDeleteEventId }) => (
   <div className="bg-white rounded-xl shadow p-4">
     <div className="flex justify-between items-start">
       <h3 className="font-semibold">{event.eventTitle}</h3>
@@ -152,7 +181,7 @@ const EventCard = ({ event, handleEventDelete }) => (
         Edit
       </Link>
       <button
-        onClick={() => handleEventDelete(event._id)}
+        onClick={() => setDeleteEventId(event._id)}
         className="text-red cursor-pointer"
       >
         Delete

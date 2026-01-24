@@ -167,7 +167,9 @@ const EventDetails = () => {
               </button>
             ) : (
               <button
-                onClick={handleLeaveEvent}
+                onClick={() =>
+                  document.getElementById("leaveEventModal").showModal()
+                }
                 className="mt-6 w-full bg-red hover:bg-rose text-white py-3 rounded-lg font-semibold"
               >
                 <p>Leave Event</p>
@@ -191,6 +193,23 @@ const EventDetails = () => {
           </div>
         </aside>
       </section>
+      <dialog id="leaveEventModal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg text-white">
+            Do you want to leave this event?
+          </h3>
+
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn bg-gray-50 text-black mr-4">No</button>
+              <button onClick={handleLeaveEvent} className="btn bg-red">
+                Yes
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
