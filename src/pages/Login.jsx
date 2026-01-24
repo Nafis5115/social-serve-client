@@ -10,7 +10,8 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
-  const redirect = location?.state?.pathname || "/";
+  const redirect = location?.state?.from || "/";
+
   const validateForm = () => {
     const newErrors = {};
     if (!email.trim()) newErrors.email = "Email is required";

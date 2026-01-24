@@ -21,6 +21,9 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { logoutUser, user, loading } = useAuth();
 
+  const handleLogout = async () => {
+    await logoutUser();
+  };
   return (
     <header className="bg-navy text-white sticky top-0 z-50">
       <div className="max-w-7xl mx-auto md:px-0 p-6 py-4 flex justify-between items-center">
@@ -170,7 +173,7 @@ const Navbar = () => {
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="btn bg-gray-50 text-black mr-4">No</button>
-              <button onClick={logoutUser} className="btn bg-red">
+              <button onClick={handleLogout} className="btn bg-red">
                 Yes
               </button>
             </form>

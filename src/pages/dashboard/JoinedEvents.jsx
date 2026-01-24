@@ -12,7 +12,6 @@ const JoinedEvents = () => {
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    if (!user?.email) return;
     (async () => {
       try {
         setLoading(true);

@@ -4,22 +4,22 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
+
+  const { user, tokenReady } = useAuth();
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
-    if (!user?.email) return;
+    if (!user?.email || !tokenReady) return;
+
     (async () => {
-      try {
-        setLoading(true);
-        const res = await axiosSecure.get(`/dashboard?email=${user?.email}`);
-        setDashboardData(res.data.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
+      setLoading(true);
+      const res = await axiosSecure.get(`/dashboard?email=${user.email}`);
+      console.log(res);
+      setLoading(false);
+      setDashboardData(res?.data?.data);
     })();
-  }, [axiosSecure, user]);
+  }, [axiosSecure, user?.email, tokenReady]);
+
   if (loading)
     return (
       <div className=" flex justify-center w-full items-center h-screen">

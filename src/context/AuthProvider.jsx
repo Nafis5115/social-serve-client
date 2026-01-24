@@ -18,9 +18,10 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const axios = useAxios();
+  const [tokenReady, setTokenReady] = useState(false);
+
   const createUser = async (email, password) => {
     try {
-      setLoading(true);
       return await createUserWithEmailAndPassword(auth, email, password);
     } finally {
       setLoading(false);
@@ -35,12 +36,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const loginUser = async (email, password) => {
-    try {
-      setLoading(true);
-      return await signInWithEmailAndPassword(auth, email, password);
-    } finally {
-      setLoading(false);
-    }
+    return await signInWithEmailAndPassword(auth, email, password);
   };
 
   const googleLogin = () => {
@@ -55,25 +51,28 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        if (currentUser) {
-          const loggedUser = { email: currentUser.email };
-          axios.post("/getToken", loggedUser).then((data) => {
-            localStorage.setItem("token", data.data.token);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+      setTokenReady(false);
+      if (currentUser?.email) {
+        try {
+          const { data } = await axios.post("/getToken", {
+            email: currentUser.email,
           });
+          localStorage.setItem("token", data.token);
+          setTokenReady(true);
+        } catch {
+          localStorage.removeItem("token");
         }
       } else {
         localStorage.removeItem("token");
       }
+
       setLoading(false);
     });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [axios]);
+    return () => unsubscribe();
+  }, [axios, loading]);
 
   const authInfo = {
     createUser,
@@ -81,11 +80,14 @@ const AuthProvider = ({ children }) => {
     loginUser,
     googleLogin,
     user,
+    tokenReady,
     loading,
     logoutUser,
   };
 
-  return <AuthContext value={authInfo}>{children}</AuthContext>;
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

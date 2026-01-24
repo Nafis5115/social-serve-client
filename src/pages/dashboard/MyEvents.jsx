@@ -17,7 +17,7 @@ const MyEvents = () => {
       try {
         setLoading(true);
         const res = await axiosSecure.get(`/my-events?email=${user?.email}`);
-        setMyEvents(res.data);
+        setMyEvents(res?.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -54,7 +54,7 @@ const MyEvents = () => {
             Events you have created and are managing
           </p>
         </div>
-        {myEvents.length === 0 ? (
+        {myEvents?.length === 0 ? (
           <div className="flex justify-center w-full items-center h-screen pb-40">
             <h3 className="text-xl font-semibold text-gray-600">
               No events found
