@@ -80,9 +80,9 @@ const CreateEvent = () => {
     console.log("Sending data:", eventData);
     try {
       setLoading(true);
-      const res = await axios.post("/create-event", eventData);
+      await axios.post("/create-event", eventData);
       setLoading(false);
-      console.log(res.data);
+
       resetForm();
       navigate("/dashboard/my-events");
     } catch (err) {

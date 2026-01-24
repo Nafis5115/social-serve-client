@@ -46,9 +46,8 @@ const Register = () => {
         photoURL: user.photoURL,
         email: user.email,
       };
-      const res = await axios.post("/create-user", newUser);
+      await axios.post("/create-user", newUser);
       setLoading(false);
-      console.log(res.data);
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         toast.error("This Email Is Already Registered");
@@ -69,8 +68,7 @@ const Register = () => {
         photoURL: user.photoURL,
         email: user.email,
       };
-      const res = await axios.post("/create-user", newUser);
-      console.log(res.data);
+      await axios.post("/create-user", newUser);
     } catch (error) {
       console.log(error);
     }

@@ -23,8 +23,7 @@ const Login = () => {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      const res = await loginUser(email, password);
-      console.log(res);
+      await loginUser(email, password);
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
         toast.error("Invalid Credential.");
@@ -34,7 +33,7 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     googleLogin()
-      .then((data) => console.log(data))
+      .then(() => {})
       .catch((e) => console.log(e));
   };
 

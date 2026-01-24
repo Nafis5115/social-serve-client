@@ -84,13 +84,12 @@ const EditEvent = () => {
       eventData.responsibilities = responsibilities;
       eventData.safetyGuidelines = safetyGuidelines;
     }
-    console.log("Sending data:", eventData);
+
     try {
       setLoading(true);
-      const res = await axios.patch(`/update-event/${event._id}`, eventData);
+      await axios.patch(`/update-event/${event._id}`, eventData);
       setLoading(false);
       navigate("/dashboard/my-events");
-      console.log(res.data);
     } catch (err) {
       console.error(err);
     }

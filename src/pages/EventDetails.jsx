@@ -60,7 +60,6 @@ const EventDetails = () => {
       }
 
       setLoading(false);
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
