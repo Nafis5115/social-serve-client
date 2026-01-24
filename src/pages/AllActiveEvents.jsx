@@ -27,7 +27,9 @@ const AllActiveEvents = () => {
       }
     })();
   }, [axios, limit, page, search, category]);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
   return (
     <div className="bg-soft text-navy">
       <section className="bg-white py-14 shadow-sm">
