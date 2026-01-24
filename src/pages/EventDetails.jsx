@@ -35,6 +35,7 @@ const EventDetails = () => {
       try {
         setLoading(true);
         const res = await axios.get(`event-joins/${data.event._id}`);
+        console.log(res);
         setJoinedCount(res.data.length);
         const joined = res.data.some((join) => join.userEmail === user?.email);
 
@@ -158,22 +159,28 @@ const EventDetails = () => {
                 <strong>Participants:</strong> {joinedCount} Joined
               </p>
             </div>
-            {!isJoined ? (
-              <button
-                onClick={handleEventJoin}
-                className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold "
-              >
-                <p>Join Event</p>
-              </button>
+            {data.event.ownerEmail !== user?.email ? (
+              !isJoined ? (
+                <button
+                  onClick={handleEventJoin}
+                  className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold "
+                >
+                  <p>Join Event</p>
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    document.getElementById("leaveEventModal").showModal()
+                  }
+                  className="mt-6 w-full bg-red hover:bg-rose text-white py-3 rounded-lg font-semibold"
+                >
+                  <p>Leave Event</p>
+                </button>
+              )
             ) : (
-              <button
-                onClick={() =>
-                  document.getElementById("leaveEventModal").showModal()
-                }
-                className="mt-6 w-full bg-red hover:bg-rose text-white py-3 rounded-lg font-semibold"
-              >
-                <p>Leave Event</p>
-              </button>
+              <p className="italic flex justify-center items-center -mb-4 mt-4 text-sm">
+                "This is my event"
+              </p>
             )}
           </div>
 
