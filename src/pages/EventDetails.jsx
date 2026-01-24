@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router";
 import { formattedDate } from "../helpers/formattedData";
 import useAxios from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const EventDetails = () => {
   const data = useLoaderData();
@@ -22,6 +23,7 @@ const EventDetails = () => {
       if (res.data.insertedId) {
         setIsJoined(true);
         setJoinedCount((prev) => prev + 1);
+        toast.success("Successfully joined event.");
       }
       setLoading(false);
     } catch (error) {
@@ -57,6 +59,7 @@ const EventDetails = () => {
       if (res.data.deletedCount > 0) {
         setIsJoined(false);
         setJoinedCount((prev) => prev - 1);
+        toast.success("Successfully leaved event.");
       }
 
       setLoading(false);

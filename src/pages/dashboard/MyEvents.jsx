@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { formattedDate } from "../../helpers/formattedData";
 import { Link } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-
+import toast from "react-hot-toast";
 const MyEvents = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,6 +30,7 @@ const MyEvents = () => {
       if (res.data.deletedCount) {
         const remainingEvent = myEvents.filter((event) => event._id !== id);
         setMyEvents(remainingEvent);
+        toast.success("Successfully Deleted event.");
       }
       setLoading(false);
     } catch (error) {

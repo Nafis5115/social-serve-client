@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
+import toast, { Toaster } from "react-hot-toast";
 
 const CreateEvent = () => {
   const [responsibilities, setResponsibilities] = useState([""]);
@@ -82,9 +83,11 @@ const CreateEvent = () => {
       setLoading(true);
       await axios.post("/create-event", eventData);
       setLoading(false);
-
+      toast.success("Successfully created event.");
       resetForm();
-      navigate("/dashboard/my-events");
+      setTimeout(() => {
+        navigate("/dashboard/my-events");
+      }, 1200);
     } catch (err) {
       console.error(err);
     }
@@ -355,6 +358,7 @@ const CreateEvent = () => {
             >
               Create Event
             </button>
+            <Toaster></Toaster>
           </div>
         </form>
       </div>

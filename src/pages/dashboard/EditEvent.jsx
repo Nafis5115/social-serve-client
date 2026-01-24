@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
-
+import toast from "react-hot-toast";
 const EditEvent = () => {
   const { state } = useLocation();
   const event = state?.event || {};
@@ -89,7 +89,10 @@ const EditEvent = () => {
       setLoading(true);
       await axios.patch(`/update-event/${event._id}`, eventData);
       setLoading(false);
-      navigate("/dashboard/my-events");
+      toast.success("Successfully updated event.");
+      setTimeout(() => {
+        navigate("/dashboard/my-events");
+      }, 1200);
     } catch (err) {
       console.error(err);
     }
