@@ -10,9 +10,10 @@ const MyEvents = () => {
   const [loading, setLoading] = useState(true);
   const [deleteEventId, setDeleteEventId] = useState(null);
 
-  const { user } = useAuth();
+  const { user, tokenReady } = useAuth();
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
+    if (!user?.email || !tokenReady) return;
     (async () => {
       try {
         setLoading(true);
@@ -23,7 +24,7 @@ const MyEvents = () => {
         console.log(error);
       }
     })();
-  }, [user, axiosSecure]);
+  }, [user, axiosSecure, tokenReady]);
 
   const handleEventDelete = async (id) => {
     try {

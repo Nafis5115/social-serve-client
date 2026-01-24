@@ -14,7 +14,7 @@ const Dashboard = () => {
     (async () => {
       setLoading(true);
       const res = await axiosSecure.get(`/dashboard?email=${user.email}`);
-      console.log(res);
+
       setLoading(false);
       setDashboardData(res?.data?.data);
     })();

@@ -8,10 +8,11 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 const JoinedEvents = () => {
   const [myJoins, setMyJoins] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { user, tokenReady } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
+    if (!user?.email || !tokenReady) return;
     (async () => {
       try {
         setLoading(true);
@@ -22,7 +23,7 @@ const JoinedEvents = () => {
         console.log(error);
       }
     })();
-  }, [axiosSecure, user]);
+  }, [axiosSecure, user?.email, tokenReady]);
   if (loading)
     return (
       <div className=" flex justify-center w-full items-center h-screen">

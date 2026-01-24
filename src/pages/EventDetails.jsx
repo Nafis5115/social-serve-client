@@ -35,7 +35,7 @@ const EventDetails = () => {
       try {
         setLoading(true);
         const res = await axios.get(`event-joins/${data.event._id}`);
-        console.log(res);
+
         setJoinedCount(res.data.length);
         const joined = res.data.some((join) => join.userEmail === user?.email);
 
