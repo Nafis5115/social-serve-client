@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
 const instance = axios.create({
-  baseURL: "https://social-serve-server-nine.vercel.app/",
+  baseURL: "https://social-serve-server-nine.vercel.app",
 });
 
 const useAxiosSecure = () => {
