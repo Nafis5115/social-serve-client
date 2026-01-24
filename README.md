@@ -66,8 +66,5 @@
 <hr />
 
 <p>
-  <em>
-    SocialServe aims to encourage community participation and empower individuals
-    to contribute toward building a cleaner, healthier, and more socially responsible society.
-  </em>
+  
 </p>
