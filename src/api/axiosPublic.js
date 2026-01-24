@@ -1,7 +1,7 @@
 import axios from "axios";
 const token = localStorage.getItem("token");
 const axiosPublic = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://social-serve-server-nine.vercel.app/",
   headers: {
     "Content-Type": "application/json",
     authorization: `Bearer ${token}`,
