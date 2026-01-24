@@ -25,12 +25,12 @@ const useAxiosSecure = () => {
       (res) => {
         return res;
       },
-      (err) => {
+      async (err) => {
         const status = err.status;
         if (status === 401 || status === 403) {
-          logoutUser().then(() => {
-            navigate("/login");
-          });
+          await logoutUser();
+          localStorage.removeItem("token");
+          navigate("/login", { replace: true });
         }
       },
     );

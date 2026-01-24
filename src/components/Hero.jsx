@@ -15,14 +15,6 @@ const Hero = () => {
               institutions through a unified system to plan, execute, and track
               social development initiatives.
             </p>
-            <div className="mt-8 flex gap-4">
-              <a className="bg-navy px-6 py-3 rounded font-semibold hover:bg-black">
-                Browse Events
-              </a>
-              <a className="border border-white px-6 py-3 rounded font-semibold hover:bg-white hover:text-navy">
-                Join as Volunteer
-              </a>
-            </div>
           </div>
 
           <img
