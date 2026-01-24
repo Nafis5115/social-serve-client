@@ -1,16 +1,33 @@
-# React + Vite
+Project Description:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SocialServe is a community-driven web platform designed to promote social responsibility and civic engagement by enabling users to create, discover, join, and manage social development events in their local areas. The platform connects volunteers, organizers, and communities to collaborate on meaningful social initiatives such as road cleaning, tree plantation, blood donation, charity drives, and other public service activities.
 
-Currently, two official plugins are available:
+User Authentication & Profiles:
+-Secure user registration and login
+-Personalized user profiles
+-Track joined and created events
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Event Management:
+-Create social service events with detailed information
+-View upcoming and ongoing events
+-Event cards with title, location, date, and description
+-Join or leave events easily
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+AI-Powered Features:
+-User can make the event's "volunteer Responsibilities" and "Safety & Guidelines" with AI.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Modern & Responsive UI:
+-Clean and user-friendly interface
+-Fully responsive design for desktop and mobile devices
+-Smooth navigation and interactive components
+
+
+Technology Stack:
+-Frontend: React.js, Tailwind CSS
+-Backend: Node.js, Express.js
+-Database: MongoDB
+-Authentication: Firebase / JWT
+-AI Integration: AI APIs for content assistance and smart suggestions
+-Version Control: Git & GitHub
