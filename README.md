@@ -1,16 +1,70 @@
-# React + Vite
+<h1>🌍 SocialServe</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p>
+  <strong>SocialServe</strong> is a community-driven web platform designed to promote
+  social responsibility and civic engagement. It enables users to create, discover,
+  join, and manage social development events in their local areas.
+</p>
 
-Currently, two official plugins are available:
+<p>
+  The platform connects volunteers, organizers, and communities to collaborate on
+  meaningful social initiatives such as road cleaning, tree plantation, blood donation,
+  charity drives, and other public service activities.
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<hr />
 
-## React Compiler
+<h2>🔐 User Authentication & Profiles</h2>
+<ul>
+  <li>Secure user registration and login</li>
+  <li>Personalized user profiles</li>
+  <li>Track events created and joined by users</li>
+</ul>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<hr />
 
-## Expanding the ESLint configuration
+<h2>📅 Event Management</h2>
+<ul>
+  <li>Create social service events with detailed information</li>
+  <li>View upcoming and ongoing events</li>
+  <li>Event cards displaying title, location, date, and description</li>
+  <li>Easy join and leave functionality for events</li>
+</ul>
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+<hr />
+
+<h2>🤖 AI-Powered Features</h2>
+<ul>
+  <li>
+    AI-assisted generation of <strong>Volunteer Responsibilities</strong>
+    and <strong>Safety & Guidelines</strong> while creating events
+  </li>
+  <li>Improves event clarity and reduces organizer effort</li>
+</ul>
+
+<hr />
+
+<h2>🎨 Modern & Responsive UI</h2>
+<ul>
+  <li>Clean, modern, and user-friendly interface</li>
+  <li>Fully responsive design for desktop and mobile devices</li>
+  <li>Smooth navigation and interactive components</li>
+</ul>
+
+<hr />
+
+<h2>🛠️ Technology Stack</h2>
+<ul>
+  <li><strong>Frontend:</strong> React.js, Tailwind CSS</li>
+  <li><strong>Backend:</strong> Node.js, Express.js</li>
+  <li><strong>Database:</strong> MongoDB</li>
+  <li><strong>Authentication:</strong> Firebase Authentication, JWT</li>
+  <li><strong>AI Integration:</strong> AI APIs for content assistance</li>
+  <li><strong>Version Control:</strong> Git & GitHub</li>
+</ul>
+
+<hr />
+
+<p>
+  
+</p>
