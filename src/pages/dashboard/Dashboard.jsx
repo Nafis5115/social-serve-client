@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Dashboard = () => {
+  const [dashboardData, setDashboardData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  useEffect(() => {
+    if (!user?.email) return;
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await axiosSecure.get(`/dashboard?email=${user?.email}`);
+        setDashboardData(res.data.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [axiosSecure, user]);
+  if (loading)
+    return (
+      <div className=" flex justify-center w-full items-center h-screen">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    );
   return (
     <div>
       <div className="mb-10">
@@ -11,26 +36,9 @@ const Dashboard = () => {
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <StatCard title="Events Joined" value="12" />
-        <StatCard title="Events Created" value="4" />
-        <StatCard title="Active Events" value="2" />
-      </div>
-
-      <div className="bg-white rounded-xl shadow p-6 mb-10">
-        <h2 className="font-bold text-lg mb-4">My Recent Events</h2>
-
-        <div className="space-y-4 text-sm">
-          <EventRow
-            title="Road Cleaning – Mirpur 10"
-            date="25 Feb 2026"
-            status="Upcoming"
-          />
-          <EventRow
-            title="Tree Plantation – Gazipur"
-            date="10 Mar 2026"
-            status="Active"
-          />
-        </div>
+        <StatCard title="Events Joined" value={dashboardData.eventsJoined} />
+        <StatCard title="Events Created" value={dashboardData.eventsCreated} />
+        <StatCard title="Active Events" value={dashboardData.activeEvents} />
       </div>
     </div>
   );
@@ -43,15 +51,4 @@ const StatCard = ({ title, value }) => (
   </div>
 );
 
-const EventRow = ({ title, date, status }) => (
-  <div className="flex justify-between items-center border-b pb-3">
-    <div>
-      <p className="font-semibold">{title}</p>
-      <p className="text-gray-500 text-xs">{date}</p>
-    </div>
-    <span className="text-xs px-3 py-1 rounded-full bg-red text-white">
-      {status}
-    </span>
-  </div>
-);
 export default Dashboard;
