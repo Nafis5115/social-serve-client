@@ -12,7 +12,7 @@ const UpcomingEvents = () => {
       try {
         setLoading(true);
         const res = await axios.get("/upcoming-events?page=1&limit=6");
-        setEvents(res?.data?.events);
+        setEvents(res?.data?.events || []);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -22,7 +22,7 @@ const UpcomingEvents = () => {
 
   if (loading)
     return (
-      <div className=" flex justify-center w-full items-start mt-20 h-screen">
+      <div className=" flex justify-center w-full items-start mt-20 h-50">
         <span className="loading loading-spinner text-black loading-xl"></span>
       </div>
     );

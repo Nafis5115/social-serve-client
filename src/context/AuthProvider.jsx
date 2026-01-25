@@ -72,7 +72,7 @@ const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, [axios, loading]);
+  }, [axios]);
 
   const authInfo = {
     createUser,
@@ -84,6 +84,13 @@ const AuthProvider = ({ children }) => {
     loading,
     logoutUser,
   };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-xl text-black"></span>
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

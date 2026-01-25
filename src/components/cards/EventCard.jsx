@@ -5,7 +5,11 @@ import { Link } from "react-router";
 const EventCard = ({ event }) => {
   return (
     <div className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-      <img src={event.thumbnailUrl} className="h-44 w-full object-cover" />
+      <img
+        src={event?.thumbnailUrl || "/placeholder.jpg"}
+        className="h-44 w-full object-cover"
+        loading="lazy"
+      />
       <div className="p-6">
         <span className="text-xs bg-red text-white px-3 py-1 rounded-full">
           {event.eventType}
